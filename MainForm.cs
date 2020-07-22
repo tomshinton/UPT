@@ -22,6 +22,10 @@ namespace UnrealProjectTool
         private TabPage ModuleViewsTabPage;
         private Label BoundProjectLabel;
         private Button FixupCopyrightButton;
+        private Panel ModuleViewPanel;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Button NewModuleButton;
+        private Panel ModuleToolboxPanel;
         private Panel ProjectInfoPanel;
 
         public MainForm()
@@ -40,13 +44,20 @@ namespace UnrealProjectTool
             this.ActionsPanel = new System.Windows.Forms.Panel();
             this.ActionTabs = new System.Windows.Forms.TabControl();
             this.ModuleViewsTabPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ModuleViewPanel = new System.Windows.Forms.Panel();
+            this.NewModuleButton = new System.Windows.Forms.Button();
             this.BoundProjectLabel = new System.Windows.Forms.Label();
+            this.ModuleToolboxPanel = new System.Windows.Forms.Panel();
             this.MainFormLayoutPanel.SuspendLayout();
             this.InfoPanel.SuspendLayout();
             this.GeneralInfoBox.SuspendLayout();
             this.ProjectInfoPanel.SuspendLayout();
             this.ActionsPanel.SuspendLayout();
             this.ActionTabs.SuspendLayout();
+            this.ModuleViewsTabPage.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.ModuleToolboxPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainFormLayoutPanel
@@ -117,7 +128,7 @@ namespace UnrealProjectTool
             // BindProjectButton
             // 
             this.BindProjectButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.BindProjectButton.Location = new System.Drawing.Point(3, 19);
+            this.BindProjectButton.Location = new System.Drawing.Point(3, 16);
             this.BindProjectButton.Name = "BindProjectButton";
             this.BindProjectButton.Size = new System.Drawing.Size(328, 25);
             this.BindProjectButton.TabIndex = 0;
@@ -130,7 +141,6 @@ namespace UnrealProjectTool
             this.ActionsPanel.BackColor = System.Drawing.SystemColors.Control;
             this.ActionsPanel.Controls.Add(this.ActionTabs);
             this.ActionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ActionsPanel.Enabled = false;
             this.ActionsPanel.Location = new System.Drawing.Point(363, 3);
             this.ActionsPanel.Name = "ActionsPanel";
             this.ActionsPanel.Size = new System.Drawing.Size(835, 505);
@@ -148,23 +158,72 @@ namespace UnrealProjectTool
             // 
             // ModuleViewsTabPage
             // 
-            this.ModuleViewsTabPage.Location = new System.Drawing.Point(4, 24);
+            this.ModuleViewsTabPage.Controls.Add(this.tableLayoutPanel1);
+            this.ModuleViewsTabPage.Location = new System.Drawing.Point(4, 22);
             this.ModuleViewsTabPage.Name = "ModuleViewsTabPage";
             this.ModuleViewsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ModuleViewsTabPage.Size = new System.Drawing.Size(827, 477);
+            this.ModuleViewsTabPage.Size = new System.Drawing.Size(827, 479);
             this.ModuleViewsTabPage.TabIndex = 0;
             this.ModuleViewsTabPage.Text = "Modules";
             this.ModuleViewsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.ModuleToolboxPanel, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.ModuleViewPanel, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Enabled = false;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(821, 473);
+            this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // ModuleViewPanel
+            // 
+            this.ModuleViewPanel.AutoScroll = true;
+            this.ModuleViewPanel.AutoSize = true;
+            this.ModuleViewPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ModuleViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ModuleViewPanel.Location = new System.Drawing.Point(3, 103);
+            this.ModuleViewPanel.Name = "ModuleViewPanel";
+            this.ModuleViewPanel.Size = new System.Drawing.Size(815, 347);
+            this.ModuleViewPanel.TabIndex = 0;
+            // 
+            // NewModuleButton
+            // 
+            this.NewModuleButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.NewModuleButton.Location = new System.Drawing.Point(5, 66);
+            this.NewModuleButton.Name = "NewModuleButton";
+            this.NewModuleButton.Size = new System.Drawing.Size(805, 23);
+            this.NewModuleButton.TabIndex = 1;
+            this.NewModuleButton.Text = "Add New Module";
+            this.NewModuleButton.UseVisualStyleBackColor = true;
             // 
             // BoundProjectLabel
             // 
             this.BoundProjectLabel.AutoSize = true;
             this.BoundProjectLabel.Location = new System.Drawing.Point(3, 511);
             this.BoundProjectLabel.Name = "BoundProjectLabel";
-            this.BoundProjectLabel.Size = new System.Drawing.Size(295, 15);
+            this.BoundProjectLabel.Size = new System.Drawing.Size(265, 13);
             this.BoundProjectLabel.TabIndex = 3;
             this.BoundProjectLabel.Text = "Press [Bind Project] to point UPT to a valid uproject file";
             this.BoundProjectLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ModuleToolboxPanel
+            // 
+            this.ModuleToolboxPanel.Controls.Add(this.NewModuleButton);
+            this.ModuleToolboxPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ModuleToolboxPanel.Location = new System.Drawing.Point(3, 3);
+            this.ModuleToolboxPanel.Name = "ModuleToolboxPanel";
+            this.ModuleToolboxPanel.Padding = new System.Windows.Forms.Padding(5);
+            this.ModuleToolboxPanel.Size = new System.Drawing.Size(815, 94);
+            this.ModuleToolboxPanel.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -174,7 +233,6 @@ namespace UnrealProjectTool
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Unreal Project Tool";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.MainFormLayoutPanel.ResumeLayout(false);
             this.MainFormLayoutPanel.PerformLayout();
             this.InfoPanel.ResumeLayout(false);
@@ -182,6 +240,10 @@ namespace UnrealProjectTool
             this.ProjectInfoPanel.ResumeLayout(false);
             this.ActionsPanel.ResumeLayout(false);
             this.ActionTabs.ResumeLayout(false);
+            this.ModuleViewsTabPage.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.ModuleToolboxPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -463,10 +525,5 @@ namespace UnrealProjectTool
         public string SourceDirectory = "";
         private Form SourceScanOutput = new Form();
         private IniReader DefaultGameConfigReader;
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
