@@ -24,6 +24,7 @@ namespace UnrealProjectTool
         private TableLayoutPanel ModuleViewsLayout;
         private Button NewModuleButton;
         private Panel ModuleToolboxPanel;
+        private Button DeleteEmptyDirsButton;
         private Panel ProjectInfoPanel;
 
         public MainForm()
@@ -47,6 +48,7 @@ namespace UnrealProjectTool
             this.NewModuleButton = new System.Windows.Forms.Button();
             this.ModuleViewPanel = new System.Windows.Forms.Panel();
             this.BoundProjectLabel = new System.Windows.Forms.Label();
+            this.DeleteEmptyDirsButton = new System.Windows.Forms.Button();
             this.MainFormLayoutPanel.SuspendLayout();
             this.InfoPanel.SuspendLayout();
             this.GeneralInfoBox.SuspendLayout();
@@ -104,6 +106,7 @@ namespace UnrealProjectTool
             // 
             this.ProjectInfoPanel.AutoSize = true;
             this.ProjectInfoPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ProjectInfoPanel.Controls.Add(this.DeleteEmptyDirsButton);
             this.ProjectInfoPanel.Controls.Add(this.FixupCopyrightButton);
             this.ProjectInfoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ProjectInfoPanel.Location = new System.Drawing.Point(3, 41);
@@ -226,6 +229,18 @@ namespace UnrealProjectTool
             this.BoundProjectLabel.Text = "Press [Bind Project] to point UPT to a valid uproject file";
             this.BoundProjectLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // DeleteEmptyDirsButton
+            // 
+            this.DeleteEmptyDirsButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.DeleteEmptyDirsButton.Enabled = false;
+            this.DeleteEmptyDirsButton.Location = new System.Drawing.Point(0, 393);
+            this.DeleteEmptyDirsButton.Name = "DeleteEmptyDirsButton";
+            this.DeleteEmptyDirsButton.Size = new System.Drawing.Size(326, 23);
+            this.DeleteEmptyDirsButton.TabIndex = 1;
+            this.DeleteEmptyDirsButton.Text = "Could not find Source";
+            this.DeleteEmptyDirsButton.UseVisualStyleBackColor = true;
+            this.DeleteEmptyDirsButton.Click += new System.EventHandler(this.DeleteEmptyDirsButton_Click);
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(1201, 531);
@@ -322,7 +337,7 @@ namespace UnrealProjectTool
         private void BuildProjectInfoPanel()
         {
             ProjectInfoPanel.Visible = true;
-
+            
             DefaultGameConfigReader = new IniReader(DefaultGameConfig);
 
             List<Label> NewLabels = new List<Label>();
@@ -377,6 +392,9 @@ namespace UnrealProjectTool
             {
                 FixupCopyrightButton.Enabled = true;
                 FixupCopyrightButton.Text = "Fixup copyright";
+
+                DeleteEmptyDirsButton.Enabled = true;
+                DeleteEmptyDirsButton.Text = "Delete empty directories";
             }
         }
 
@@ -612,6 +630,24 @@ namespace UnrealProjectTool
             PrimaryGameplayBuildFile = Path.Combine(SourceDirectory, PrimaryModuleName, PrimaryModuleName) + ".build.cs";
         }
 
+        private void DeleteEmptyDirsButton_Click(object sender, EventArgs e)
+        {
+            CheckDirectoryIsEmpty(SourceDirectory);
+        }
+
+        private void CheckDirectoryIsEmpty(string InDirectory)
+        {
+            foreach (string Dir in Directory.GetDirectories(InDirectory))
+            {
+                CheckDirectoryIsEmpty(Dir);
+                if (Directory.GetFiles(Dir).Length == 0 &&
+                    Directory.GetDirectories(Dir).Length == 0)
+                {
+                    Directory.Delete(Dir, false);
+                }
+            }
+        }
+
         public string BoundProjectDir = "";
         public string DefaultGameConfig = "";
         public string SourceDirectory = "";
@@ -623,5 +659,6 @@ namespace UnrealProjectTool
         string EmptyModuleFiles = GetEmptyModulePath();
 
         static string EmptyModuleToken = @"Empty";
+
     }
 }
