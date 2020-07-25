@@ -24,7 +24,6 @@ namespace UnrealProjectTool
         private TableLayoutPanel ModuleViewsLayout;
         private Button NewModuleButton;
         private Panel ModuleToolboxPanel;
-        private Button SaveProjectButton;
         private Panel ProjectInfoPanel;
 
         public MainForm()
@@ -39,7 +38,6 @@ namespace UnrealProjectTool
             this.GeneralInfoBox = new System.Windows.Forms.GroupBox();
             this.ProjectInfoPanel = new System.Windows.Forms.Panel();
             this.FixupCopyrightButton = new System.Windows.Forms.Button();
-            this.SaveProjectButton = new System.Windows.Forms.Button();
             this.BindProjectButton = new System.Windows.Forms.Button();
             this.ActionsPanel = new System.Windows.Forms.Panel();
             this.ActionTabs = new System.Windows.Forms.TabControl();
@@ -93,7 +91,6 @@ namespace UnrealProjectTool
             // 
             this.GeneralInfoBox.BackColor = System.Drawing.SystemColors.Control;
             this.GeneralInfoBox.Controls.Add(this.ProjectInfoPanel);
-            this.GeneralInfoBox.Controls.Add(this.SaveProjectButton);
             this.GeneralInfoBox.Controls.Add(this.BindProjectButton);
             this.GeneralInfoBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GeneralInfoBox.Location = new System.Drawing.Point(10, 10);
@@ -109,9 +106,9 @@ namespace UnrealProjectTool
             this.ProjectInfoPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ProjectInfoPanel.Controls.Add(this.FixupCopyrightButton);
             this.ProjectInfoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ProjectInfoPanel.Location = new System.Drawing.Point(3, 64);
+            this.ProjectInfoPanel.Location = new System.Drawing.Point(3, 41);
             this.ProjectInfoPanel.Name = "ProjectInfoPanel";
-            this.ProjectInfoPanel.Size = new System.Drawing.Size(328, 418);
+            this.ProjectInfoPanel.Size = new System.Drawing.Size(328, 441);
             this.ProjectInfoPanel.TabIndex = 1;
             this.ProjectInfoPanel.Visible = false;
             // 
@@ -119,7 +116,7 @@ namespace UnrealProjectTool
             // 
             this.FixupCopyrightButton.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.FixupCopyrightButton.Enabled = false;
-            this.FixupCopyrightButton.Location = new System.Drawing.Point(0, 393);
+            this.FixupCopyrightButton.Location = new System.Drawing.Point(0, 416);
             this.FixupCopyrightButton.Margin = new System.Windows.Forms.Padding(20);
             this.FixupCopyrightButton.Name = "FixupCopyrightButton";
             this.FixupCopyrightButton.Size = new System.Drawing.Size(326, 23);
@@ -127,18 +124,6 @@ namespace UnrealProjectTool
             this.FixupCopyrightButton.Text = "Could not find Source";
             this.FixupCopyrightButton.UseVisualStyleBackColor = true;
             this.FixupCopyrightButton.Click += new System.EventHandler(this.FixupCopywriteButton_Click);
-            // 
-            // SaveProjectButton
-            // 
-            this.SaveProjectButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SaveProjectButton.Location = new System.Drawing.Point(3, 41);
-            this.SaveProjectButton.Name = "SaveProjectButton";
-            this.SaveProjectButton.Size = new System.Drawing.Size(328, 23);
-            this.SaveProjectButton.TabIndex = 2;
-            this.SaveProjectButton.Text = "SaveProject";
-            this.SaveProjectButton.UseVisualStyleBackColor = true;
-            this.SaveProjectButton.Visible = false;
-            this.SaveProjectButton.Click += new System.EventHandler(this.SaveProjectButton_Click);
             // 
             // BindProjectButton
             // 
@@ -249,7 +234,6 @@ namespace UnrealProjectTool
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Unreal Project Tool";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.MainFormLayoutPanel.ResumeLayout(false);
             this.MainFormLayoutPanel.PerformLayout();
             this.InfoPanel.ResumeLayout(false);
@@ -264,25 +248,6 @@ namespace UnrealProjectTool
             this.ModuleToolboxPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if(e.CloseReason == CloseReason.UserClosing)
-            {
-                if(ProjectNeedsSave)
-                {
-                    DialogResult Result = MessageBox.Show(@"You've made project changes - would you like to save?", @"Exit", MessageBoxButtons.YesNoCancel);
-                    if (Result == DialogResult.Yes)
-                    {
-                        SaveProject();
-                    }
-                    else if (Result == DialogResult.Cancel)
-                    {
-                        e.Cancel = true;
-                    }
-                }
-            }
         }
 
         //Find a Uproject file to open
@@ -604,7 +569,7 @@ namespace UnrealProjectTool
 
             string[] Files = Directory.GetFiles(NewDirectoryName);
 
-            foreach(string CurrFile in Files)
+            foreach (string CurrFile in Files)
             {
                 string text = File.ReadAllText(CurrFile);
                 text = text.Replace(EmptyModuleToken, InNewModuleData.Name);
@@ -626,31 +591,11 @@ namespace UnrealProjectTool
             ContentsAsList.Insert(Index - 1, @"PrivateDependencyModuleNames.AddRange(new string[]{ " + '\u0022' + InNewModuleData.Name + '\u0022' + " });");
             File.WriteAllLines(PrimaryGameplayBuildFile, ContentsAsList.ToArray());
 
-            SetProjectNeedsSave(true);
-        }
-
-        public void SetProjectNeedsSave(bool InNeedsSave)
-        {
-            ProjectNeedsSave = InNeedsSave;
-
-            if(InNeedsSave)
-            {
-                SaveProjectButton.Visible = true;
-            }
-            else
-            {
-                SaveProjectButton.Visible = false;
-            }
-        }
-        private void SaveProjectButton_Click(object sender, EventArgs e)
-        {
             SaveProject();
         }
 
         private void SaveProject()
         {
-            SetProjectNeedsSave(false);
-
             ProjectWorker.Save();
         }
 
@@ -674,7 +619,6 @@ namespace UnrealProjectTool
         private IniReader DefaultGameConfigReader;
         private UProjectWorker ProjectWorker;
         private string PrimaryGameplayBuildFile = "";
-        bool ProjectNeedsSave = false;
 
         string EmptyModuleFiles = GetEmptyModulePath();
 
