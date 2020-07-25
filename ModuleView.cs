@@ -12,9 +12,21 @@ namespace UnrealProjectTool
 {
     public partial class ModuleView : UserControl
     {
-        public ModuleView()
+        public ModuleView(ModuleData LoadedModuleData)
         {
             InitializeComponent();
+
+            Data = LoadedModuleData;
+            BuildView();
         }
+
+        private void BuildView()
+        {
+            ModuleNameLabel.Text = ModuleNameLabel.Text + " " + Data.Name;
+            ModuleTypeLabel.Text = ModuleTypeLabel.Text + " " + Data.Type;
+            LoadingPhaseLabel.Text = LoadingPhaseLabel.Text + " " + Data.LoadingPhase;
+        }
+
+        ModuleData Data;
     }
 }

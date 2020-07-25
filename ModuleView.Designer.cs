@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.LoadingPhaseLabel = new System.Windows.Forms.Label();
             this.ModuleTypeLabel = new System.Windows.Forms.Label();
             this.ModuleNameLabel = new System.Windows.Forms.Label();
-            this.LoadingPhaseLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,6 +49,16 @@
             this.panel1.Padding = new System.Windows.Forms.Padding(10);
             this.panel1.Size = new System.Drawing.Size(465, 64);
             this.panel1.TabIndex = 0;
+            // 
+            // LoadingPhaseLabel
+            // 
+            this.LoadingPhaseLabel.AutoSize = true;
+            this.LoadingPhaseLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LoadingPhaseLabel.Location = new System.Drawing.Point(10, 36);
+            this.LoadingPhaseLabel.Name = "LoadingPhaseLabel";
+            this.LoadingPhaseLabel.Size = new System.Drawing.Size(81, 13);
+            this.LoadingPhaseLabel.TabIndex = 2;
+            this.LoadingPhaseLabel.Text = "Loading Phase:";
             // 
             // ModuleTypeLabel
             // 
@@ -69,16 +79,6 @@
             this.ModuleNameLabel.Size = new System.Drawing.Size(76, 13);
             this.ModuleNameLabel.TabIndex = 0;
             this.ModuleNameLabel.Text = "Module Name:";
-            // 
-            // LoadingPhaseLabel
-            // 
-            this.LoadingPhaseLabel.AutoSize = true;
-            this.LoadingPhaseLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.LoadingPhaseLabel.Location = new System.Drawing.Point(10, 36);
-            this.LoadingPhaseLabel.Name = "LoadingPhaseLabel";
-            this.LoadingPhaseLabel.Size = new System.Drawing.Size(81, 13);
-            this.LoadingPhaseLabel.TabIndex = 2;
-            this.LoadingPhaseLabel.Text = "Loading Phase:";
             // 
             // ModuleView
             // 
