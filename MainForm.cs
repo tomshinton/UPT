@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
-using System.Threading;
 using System.Linq;
 using System.IO.Compression;
 
@@ -312,9 +309,12 @@ namespace UnrealProjectTool
                 }
 
                 CacheSourcePath();
+                CachePrimaryGameplayBuildFile();
+
                 ProjectWorker = new UProjectWorker(BoundProjectDir);
 
                 BuildModulePanel();
+                
             }
         }
 
@@ -613,6 +613,19 @@ namespace UnrealProjectTool
                 System.IO.File.Move(CurrFile, CurrFile.Replace(EmptyModuleToken, InNewModuleData.Name));
             }
 
+            string[] PrimaryBuildFileContents = File.ReadAllLines(PrimaryGameplayBuildFile);
+            List<string> ContentsAsList = new List<string>();
+            ContentsAsList = PrimaryBuildFileContents.ToList<string>();
+
+            int Index = ContentsAsList.FindIndex(
+            delegate (string Line)
+            {
+                return Line.Contains(@"PrivateDependencyModuleNames");
+            });
+
+            ContentsAsList.Insert(Index - 1, @"PrivateDependencyModuleNames.AddRange(new string[]{ " + '\u0022' + InNewModuleData.Name + '\u0022' + " });");
+            File.WriteAllLines(PrimaryGameplayBuildFile, ContentsAsList.ToArray());
+
             SetProjectNeedsSave(true);
         }
 
@@ -648,13 +661,19 @@ namespace UnrealProjectTool
             return Path.Combine(FilePath, "EmptyModuleTemplate.zip");
         }
 
+        private void CachePrimaryGameplayBuildFile()
+        {
+            string PrimaryModuleName = DefaultGameConfigReader.GetValForKey(@"ProjectName").Replace(" ", "");
+            PrimaryGameplayBuildFile = Path.Combine(SourceDirectory, PrimaryModuleName, PrimaryModuleName) + ".build.cs";
+        }
+
         public string BoundProjectDir = "";
         public string DefaultGameConfig = "";
         public string SourceDirectory = "";
         private Form SourceScanOutput = new Form();
         private IniReader DefaultGameConfigReader;
         private UProjectWorker ProjectWorker;
-
+        private string PrimaryGameplayBuildFile = "";
         bool ProjectNeedsSave = false;
 
         string EmptyModuleFiles = GetEmptyModulePath();
