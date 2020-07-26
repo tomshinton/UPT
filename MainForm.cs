@@ -582,7 +582,7 @@ namespace UnrealProjectTool
 
             ZipFile.ExtractToDirectory(EmptyModuleFiles, Path.Combine(SourceDirectory, "Runtime"));
 
-            string NewDirectoryName = Path.Combine(SourceDirectory, "Runtime", InNewModuleData.Name);
+            string NewDirectoryName = Path.Combine(SourceDirectory, InNewModuleData.Type, InNewModuleData.Name);
             Directory.Move(Path.Combine(SourceDirectory, "Runtime", EmptyModuleToken), NewDirectoryName);
 
             string[] Files = Directory.GetFiles(NewDirectoryName);
@@ -596,18 +596,21 @@ namespace UnrealProjectTool
                 System.IO.File.Move(CurrFile, CurrFile.Replace(EmptyModuleToken, InNewModuleData.Name));
             }
 
-            string[] PrimaryBuildFileContents = File.ReadAllLines(PrimaryGameplayBuildFile);
-            List<string> ContentsAsList = new List<string>();
-            ContentsAsList = PrimaryBuildFileContents.ToList<string>();
-
-            int Index = ContentsAsList.FindIndex(
-            delegate (string Line)
+            if (InNewModuleData.Type == "Runtime")
             {
-                return Line.Contains(@"PrivateDependencyModuleNames");
-            });
+                string[] PrimaryBuildFileContents = File.ReadAllLines(PrimaryGameplayBuildFile);
+                List<string> ContentsAsList = new List<string>();
+                ContentsAsList = PrimaryBuildFileContents.ToList<string>();
 
-            ContentsAsList.Insert(Index - 1, @"PrivateDependencyModuleNames.AddRange(new string[]{ " + '\u0022' + InNewModuleData.Name + '\u0022' + " });");
-            File.WriteAllLines(PrimaryGameplayBuildFile, ContentsAsList.ToArray());
+                int Index = ContentsAsList.FindIndex(
+                delegate (string Line)
+                {
+                    return Line.Contains(@"PrivateDependencyModuleNames");
+                });
+
+                ContentsAsList.Insert(Index - 1, @"PrivateDependencyModuleNames.AddRange(new string[]{ " + '\u0022' + InNewModuleData.Name + '\u0022' + " });");
+                File.WriteAllLines(PrimaryGameplayBuildFile, ContentsAsList.ToArray());
+            }
 
             SaveProject();
         }
