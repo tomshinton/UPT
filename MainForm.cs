@@ -6,6 +6,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Linq;
 using System.IO.Compression;
+using System.Reflection;
 
 namespace UnrealProjectTool
 {
@@ -294,7 +295,6 @@ namespace UnrealProjectTool
                 ProjectWorker = new UProjectWorker(BoundProjectDir);
 
                 BuildModulePanel();
-                
             }
         }
 
@@ -561,6 +561,7 @@ namespace UnrealProjectTool
         {
             System.IO.File.WriteAllLines(InPath, NewFileText);
         }
+
         private void NewModuleButton_Click(object sender, EventArgs e)
         {
             NewModuleForm ModuleForm = new NewModuleForm();
@@ -622,7 +623,7 @@ namespace UnrealProjectTool
 
         static private string GetEmptyModulePath()
         {
-            string AppPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            string AppPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
             string FilePath = Path.Combine(AppPath, "Resources");
             return Path.Combine(FilePath, "EmptyModuleTemplate.zip");
         }
@@ -662,6 +663,5 @@ namespace UnrealProjectTool
         string EmptyModuleFiles = GetEmptyModulePath();
 
         static string EmptyModuleToken = @"Empty";
-
     }
 }
