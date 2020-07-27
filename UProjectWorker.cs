@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnrealProjectTool
 {
@@ -42,14 +40,20 @@ namespace UnrealProjectTool
         public UProjectWorker(string InProjectFile)
         {
             ProjectFile = InProjectFile;
-            Parse();
+
+            GenerateProjectProxyObject();
+
+            DefaultGameConfigReader = new IniReader(CacheDefaultGamePath());
+
+            CacheSourcePath();
+            CachePrimaryGameplayBuildFile();
         }
 
         public void AddModuleToProxy(ModuleData InNewModule)
         {
             Proxy.Modules.Add(InNewModule);
         }
-        private void Parse()
+        private void GenerateProjectProxyObject()
         {
             using (StreamReader r = new StreamReader(ProjectFile))
             {
@@ -68,7 +72,74 @@ namespace UnrealProjectTool
             System.IO.File.WriteAllText(ProjectFile, SerializedObject);
         }
 
+        private string CacheDefaultGamePath()
+        {
+            string[] Dirs = Directory.GetDirectories(Path.GetDirectoryName(ProjectFile));
+
+            foreach (string Dir in Dirs)
+            {
+                Debug.WriteLine("Found dir " + Dir);
+                if (Dir.Contains(@"Config"))
+                {
+                    Debug.WriteLine("Potential config folder found, checking for Default inis");
+
+                    string[] ConfigFiles = Directory.GetFiles(Dir);
+
+                    foreach (string ConfigFile in ConfigFiles)
+                    {
+                        if (ConfigFile.Contains(@"DefaultGame"))
+                        {
+                            Debug.WriteLine("Found DefaultGame.ini, caching and bailing out");
+                            DefaultGameConfig = ConfigFile;
+                            break;
+                        }
+                    }
+
+                    if (DefaultGameConfig != "")
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return DefaultGameConfig;
+        }
+
+        private void CacheSourcePath()
+        {
+            string[] Dirs = Directory.GetDirectories(Path.GetDirectoryName(ProjectFile));
+
+            foreach (string Dir in Dirs)
+            {
+                if (Dir.Contains(@"Source"))
+                {
+                    SourceDirectory = Dir;
+                    break;
+                }
+            }
+        }
+
+        static private string GetEmptyModulePath()
+        {
+            string AppPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+            string FilePath = Path.Combine(AppPath, "Resources");
+            return Path.Combine(FilePath, "EmptyModuleTemplate.zip");
+        }
+
+        private void CachePrimaryGameplayBuildFile()
+        {
+            string PrimaryModuleName = DefaultGameConfigReader.GetValForKey(@"ProjectName").Replace(" ", "");
+            PrimaryGameplayBuildFile = Path.Combine(SourceDirectory, PrimaryModuleName, PrimaryModuleName) + ".build.cs";
+        }
+
         public UProjectProxy Proxy;
         private string ProjectFile;
+
+        public IniReader DefaultGameConfigReader;
+
+        public string DefaultGameConfig = "";
+        public string SourceDirectory = "";
+        public string PrimaryGameplayBuildFile = "";
+        public string EmptyModuleFiles = GetEmptyModulePath();
     }
 }

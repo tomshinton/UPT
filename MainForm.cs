@@ -278,86 +278,51 @@ namespace UnrealProjectTool
 
             FindProjectDialog.ShowDialog();
 
-            BoundProjectDir = FindProjectDialog.FileName;
+            string BoundProjectDir = FindProjectDialog.FileName;
 
             if (BoundProjectDir != "")
             {
-                BoundProjectLabel.Text = "Project found at: " + BoundProjectDir;
-
-                if (CacheDefaultGamePath())
-                {
-                    BuildProjectInfoPanel();
-                }
-
-                CacheSourcePath();
-                CachePrimaryGameplayBuildFile();
-
+                //Critical - caches all paths and files all necessary files
                 ProjectWorker = new UProjectWorker(BoundProjectDir);
 
+                BoundProjectLabel.Text = "Project found at: " + BoundProjectDir;
+
+                BuildProjectInfoPanel();
                 BuildModulePanel();
             }
-        }
-
-        private bool CacheDefaultGamePath()
-        {
-            if (BoundProjectDir != "")
-            {
-                string[] Dirs = Directory.GetDirectories(Path.GetDirectoryName(BoundProjectDir));
-
-                foreach (string Dir in Dirs)
-                {
-                    Debug.WriteLine("Found dir " + Dir);
-                    if (Dir.Contains(@"Config"))
-                    {
-                        Debug.WriteLine("Potential config folder found, checking for Default inis");
-
-                        string[] ConfigFiles = Directory.GetFiles(Dir);
-
-                        foreach (string ConfigFile in ConfigFiles)
-                        {
-                            if (ConfigFile.Contains(@"DefaultGame"))
-                            {
-                                Debug.WriteLine("Found DefaultGame.ini, caching and bailing out");
-                                DefaultGameConfig = ConfigFile;
-                                break;
-                            }
-                        }
-
-                        if (DefaultGameConfig != "")
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return DefaultGameConfig != "";
         }
 
         private void BuildProjectInfoPanel()
         {
             ProjectInfoPanel.Visible = true;
             
-            DefaultGameConfigReader = new IniReader(DefaultGameConfig);
-
             List<Label> NewLabels = new List<Label>();
 
             Label ProjectNameLabel = new Label();
             Label CopywriteLabel = new Label();
-            Label ProjectVersionLabel = new Label();
+            Label ProjectVersionLabel = new Label();    
             NewLabels.Insert(0, ProjectNameLabel);
             NewLabels.Insert(0, CopywriteLabel);
             NewLabels.Insert(0, ProjectVersionLabel);
 
-            ProjectNameLabel.Text = "Project Name: " + DefaultGameConfigReader.GetValForKey(@"ProjectName");
-            CopywriteLabel.Text = "Copywrite Notice: " + DefaultGameConfigReader.GetValForKey(@"CopyrightNotice");
-            ProjectVersionLabel.Text = "Project Version: " + DefaultGameConfigReader.GetValForKey(@"ProjectVersion");
+            ProjectNameLabel.Text = "Project Name: " + ProjectWorker.DefaultGameConfigReader.GetValForKey(@"ProjectName");
+            CopywriteLabel.Text = "Copywrite Notice: " + ProjectWorker.DefaultGameConfigReader.GetValForKey(@"CopyrightNotice");
+            ProjectVersionLabel.Text = "Project Version: " + ProjectWorker.DefaultGameConfigReader.GetValForKey(@"ProjectVersion");
 
             foreach (Label NewLabel in NewLabels)
             {
                 ProjectInfoPanel.Controls.Add(NewLabel);
                 NewLabel.Dock = DockStyle.Top;
                 NewLabel.AutoSize = true;
+            }
+
+            if (ProjectWorker.SourceDirectory != "")
+            {
+                FixupCopyrightButton.Enabled = true;
+                FixupCopyrightButton.Text = "Fixup copyright";
+
+                DeleteEmptyDirsButton.Enabled = true;
+                DeleteEmptyDirsButton.Text = "Delete empty directories";
             }
         }
 
@@ -372,29 +337,6 @@ namespace UnrealProjectTool
 
                 ModuleViewPanel.Controls.Add(NewModuleView);
                 ModuleViewPanel.Update();
-            }
-        }
-
-        private void CacheSourcePath()
-        {
-            string[] Dirs = Directory.GetDirectories(Path.GetDirectoryName(BoundProjectDir));
-
-            foreach (string Dir in Dirs)
-            {
-                if (Dir.Contains(@"Source"))
-                {
-                    SourceDirectory = Dir;
-                    break;
-                }
-            }
-
-            if (SourceDirectory != "")
-            {
-                FixupCopyrightButton.Enabled = true;
-                FixupCopyrightButton.Text = "Fixup copyright";
-
-                DeleteEmptyDirsButton.Enabled = true;
-                DeleteEmptyDirsButton.Text = "Delete empty directories";
             }
         }
 
@@ -428,7 +370,7 @@ namespace UnrealProjectTool
             SourceScanOutput.Controls.Add(NewPanel);
             SourceScanOutput.Show();
 
-            string[] Files = Directory.GetFiles(SourceDirectory, "*.*", SearchOption.AllDirectories);
+            string[] Files = Directory.GetFiles(ProjectWorker.SourceDirectory, "*.*", SearchOption.AllDirectories);
             Dictionary<string, string> InvalidFiles = new Dictionary<string, string>();
             int FileNum = 1;
 
@@ -493,7 +435,7 @@ namespace UnrealProjectTool
         private bool CheckFileHasCorrectCopyright(string InFile, out string IncorrectFirstLine) 
         {
             string FirstLine = File.ReadLines(InFile).First();
-            string CopyrightNotice = DefaultGameConfigReader.GetValForKey(@"CopyrightNotice");
+            string CopyrightNotice = ProjectWorker.DefaultGameConfigReader.GetValForKey(@"CopyrightNotice");
 
             if (FirstLine != ("// " + CopyrightNotice))
             {
@@ -507,7 +449,7 @@ namespace UnrealProjectTool
 
         private void TryApplyCopyrightToFiles(Dictionary<string, string> InFiles)
         {
-            string NewCopyrightLine = "// " + DefaultGameConfigReader.GetValForKey(@"CopyrightNotice");
+            string NewCopyrightLine = "// " + ProjectWorker.DefaultGameConfigReader.GetValForKey(@"CopyrightNotice");
 
             int NumFixes = 0;
             foreach(KeyValuePair<string, string> FilePair in InFiles)
@@ -581,10 +523,10 @@ namespace UnrealProjectTool
             ModuleViewPanel.Controls.Add(NewModuleView);
             ProjectWorker.AddModuleToProxy(InNewModuleData);
 
-            ZipFile.ExtractToDirectory(EmptyModuleFiles, Path.Combine(SourceDirectory, "Runtime"));
+            ZipFile.ExtractToDirectory(ProjectWorker.EmptyModuleFiles, Path.Combine(ProjectWorker.SourceDirectory, "Runtime"));
 
-            string NewDirectoryName = Path.Combine(SourceDirectory, InNewModuleData.Type, InNewModuleData.Name);
-            Directory.Move(Path.Combine(SourceDirectory, "Runtime", EmptyModuleToken), NewDirectoryName);
+            string NewDirectoryName = Path.Combine(ProjectWorker.SourceDirectory, InNewModuleData.Type, InNewModuleData.Name);
+            Directory.Move(Path.Combine(ProjectWorker.SourceDirectory, "Runtime", EmptyModuleToken), NewDirectoryName);
 
             string[] Files = Directory.GetFiles(NewDirectoryName);
 
@@ -599,7 +541,7 @@ namespace UnrealProjectTool
 
             if (InNewModuleData.Type == "Runtime")
             {
-                string[] PrimaryBuildFileContents = File.ReadAllLines(PrimaryGameplayBuildFile);
+                string[] PrimaryBuildFileContents = File.ReadAllLines(ProjectWorker.PrimaryGameplayBuildFile);
                 List<string> ContentsAsList = new List<string>();
                 ContentsAsList = PrimaryBuildFileContents.ToList<string>();
 
@@ -609,8 +551,9 @@ namespace UnrealProjectTool
                     return Line.Contains(@"PrivateDependencyModuleNames");
                 });
 
+                //UNICODE to add speech marks
                 ContentsAsList.Insert(Index - 1, @"PrivateDependencyModuleNames.AddRange(new string[]{ " + '\u0022' + InNewModuleData.Name + '\u0022' + " });");
-                File.WriteAllLines(PrimaryGameplayBuildFile, ContentsAsList.ToArray());
+                File.WriteAllLines(ProjectWorker.PrimaryGameplayBuildFile, ContentsAsList.ToArray());
             }
 
             SaveProject();
@@ -621,22 +564,9 @@ namespace UnrealProjectTool
             ProjectWorker.Save();
         }
 
-        static private string GetEmptyModulePath()
-        {
-            string AppPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
-            string FilePath = Path.Combine(AppPath, "Resources");
-            return Path.Combine(FilePath, "EmptyModuleTemplate.zip");
-        }
-
-        private void CachePrimaryGameplayBuildFile()
-        {
-            string PrimaryModuleName = DefaultGameConfigReader.GetValForKey(@"ProjectName").Replace(" ", "");
-            PrimaryGameplayBuildFile = Path.Combine(SourceDirectory, PrimaryModuleName, PrimaryModuleName) + ".build.cs";
-        }
-
         private void DeleteEmptyDirsButton_Click(object sender, EventArgs e)
         {
-            CheckDirectoryIsEmpty(SourceDirectory);
+            CheckDirectoryIsEmpty(ProjectWorker.SourceDirectory);
         }
 
         private void CheckDirectoryIsEmpty(string InDirectory)
@@ -652,16 +582,8 @@ namespace UnrealProjectTool
             }
         }
 
-        public string BoundProjectDir = "";
-        public string DefaultGameConfig = "";
-        public string SourceDirectory = "";
         private Form SourceScanOutput = new Form();
-        private IniReader DefaultGameConfigReader;
         private UProjectWorker ProjectWorker;
-        private string PrimaryGameplayBuildFile = "";
-
-        string EmptyModuleFiles = GetEmptyModulePath();
-
         static string EmptyModuleToken = @"Empty";
     }
 }
