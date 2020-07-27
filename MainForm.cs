@@ -27,6 +27,8 @@ namespace UnrealProjectTool
         private Panel ModuleToolboxPanel;
         private Button DeleteEmptyDirsButton;
         private Panel ProjectActionsPanel;
+        private TableLayoutPanel FormLayoutPanel;
+        private Label ToolName;
         private Panel ProjectInfoPanel;
 
         public MainForm()
@@ -36,6 +38,7 @@ namespace UnrealProjectTool
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MainFormLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.InfoPanel = new System.Windows.Forms.Panel();
             this.GeneralInfoBox = new System.Windows.Forms.GroupBox();
@@ -52,6 +55,8 @@ namespace UnrealProjectTool
             this.NewModuleButton = new System.Windows.Forms.Button();
             this.ModuleViewPanel = new System.Windows.Forms.Panel();
             this.BoundProjectLabel = new System.Windows.Forms.Label();
+            this.FormLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.ToolName = new System.Windows.Forms.Label();
             this.MainFormLayoutPanel.SuspendLayout();
             this.InfoPanel.SuspendLayout();
             this.GeneralInfoBox.SuspendLayout();
@@ -61,10 +66,13 @@ namespace UnrealProjectTool
             this.ModuleViewsTabPage.SuspendLayout();
             this.ModuleViewsLayout.SuspendLayout();
             this.ModuleToolboxPanel.SuspendLayout();
+            this.FormLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainFormLayoutPanel
             // 
+            this.MainFormLayoutPanel.AutoSize = true;
+            this.MainFormLayoutPanel.BackColor = System.Drawing.Color.Transparent;
             this.MainFormLayoutPanel.ColumnCount = 2;
             this.MainFormLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.MainFormLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
@@ -72,36 +80,36 @@ namespace UnrealProjectTool
             this.MainFormLayoutPanel.Controls.Add(this.ActionsPanel, 1, 0);
             this.MainFormLayoutPanel.Controls.Add(this.BoundProjectLabel, 0, 1);
             this.MainFormLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainFormLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.MainFormLayoutPanel.Location = new System.Drawing.Point(3, 78);
             this.MainFormLayoutPanel.Name = "MainFormLayoutPanel";
             this.MainFormLayoutPanel.RowCount = 2;
             this.MainFormLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainFormLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.MainFormLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.MainFormLayoutPanel.Size = new System.Drawing.Size(1184, 461);
+            this.MainFormLayoutPanel.Size = new System.Drawing.Size(1178, 480);
             this.MainFormLayoutPanel.TabIndex = 0;
             // 
             // InfoPanel
             // 
-            this.InfoPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.InfoPanel.BackColor = System.Drawing.Color.Gainsboro;
             this.InfoPanel.Controls.Add(this.GeneralInfoBox);
             this.InfoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.InfoPanel.Location = new System.Drawing.Point(3, 3);
             this.InfoPanel.Name = "InfoPanel";
             this.InfoPanel.Padding = new System.Windows.Forms.Padding(10);
-            this.InfoPanel.Size = new System.Drawing.Size(349, 435);
+            this.InfoPanel.Size = new System.Drawing.Size(347, 454);
             this.InfoPanel.TabIndex = 0;
             // 
             // GeneralInfoBox
             // 
-            this.GeneralInfoBox.BackColor = System.Drawing.SystemColors.Control;
+            this.GeneralInfoBox.BackColor = System.Drawing.Color.Transparent;
             this.GeneralInfoBox.Controls.Add(this.ProjectActionsPanel);
             this.GeneralInfoBox.Controls.Add(this.ProjectInfoPanel);
             this.GeneralInfoBox.Controls.Add(this.BindProjectButton);
             this.GeneralInfoBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GeneralInfoBox.Location = new System.Drawing.Point(10, 10);
             this.GeneralInfoBox.Name = "GeneralInfoBox";
-            this.GeneralInfoBox.Size = new System.Drawing.Size(329, 415);
+            this.GeneralInfoBox.Size = new System.Drawing.Size(327, 434);
             this.GeneralInfoBox.TabIndex = 0;
             this.GeneralInfoBox.TabStop = false;
             this.GeneralInfoBox.Text = "General Info";
@@ -112,9 +120,9 @@ namespace UnrealProjectTool
             this.ProjectActionsPanel.Controls.Add(this.FixupCopyrightButton);
             this.ProjectActionsPanel.Controls.Add(this.DeleteEmptyDirsButton);
             this.ProjectActionsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ProjectActionsPanel.Location = new System.Drawing.Point(3, 366);
+            this.ProjectActionsPanel.Location = new System.Drawing.Point(3, 385);
             this.ProjectActionsPanel.Name = "ProjectActionsPanel";
-            this.ProjectActionsPanel.Size = new System.Drawing.Size(323, 46);
+            this.ProjectActionsPanel.Size = new System.Drawing.Size(321, 46);
             this.ProjectActionsPanel.TabIndex = 2;
             // 
             // FixupCopyrightButton
@@ -124,7 +132,7 @@ namespace UnrealProjectTool
             this.FixupCopyrightButton.Location = new System.Drawing.Point(0, 0);
             this.FixupCopyrightButton.Margin = new System.Windows.Forms.Padding(20);
             this.FixupCopyrightButton.Name = "FixupCopyrightButton";
-            this.FixupCopyrightButton.Size = new System.Drawing.Size(323, 23);
+            this.FixupCopyrightButton.Size = new System.Drawing.Size(321, 23);
             this.FixupCopyrightButton.TabIndex = 0;
             this.FixupCopyrightButton.Text = "Could not find Source";
             this.FixupCopyrightButton.UseVisualStyleBackColor = true;
@@ -136,7 +144,7 @@ namespace UnrealProjectTool
             this.DeleteEmptyDirsButton.Enabled = false;
             this.DeleteEmptyDirsButton.Location = new System.Drawing.Point(0, 23);
             this.DeleteEmptyDirsButton.Name = "DeleteEmptyDirsButton";
-            this.DeleteEmptyDirsButton.Size = new System.Drawing.Size(323, 23);
+            this.DeleteEmptyDirsButton.Size = new System.Drawing.Size(321, 23);
             this.DeleteEmptyDirsButton.TabIndex = 1;
             this.DeleteEmptyDirsButton.Text = "Could not find Source";
             this.DeleteEmptyDirsButton.UseVisualStyleBackColor = true;
@@ -147,18 +155,18 @@ namespace UnrealProjectTool
             this.ProjectInfoPanel.AutoSize = true;
             this.ProjectInfoPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ProjectInfoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ProjectInfoPanel.Location = new System.Drawing.Point(3, 41);
+            this.ProjectInfoPanel.Location = new System.Drawing.Point(3, 42);
             this.ProjectInfoPanel.Name = "ProjectInfoPanel";
-            this.ProjectInfoPanel.Size = new System.Drawing.Size(323, 371);
+            this.ProjectInfoPanel.Size = new System.Drawing.Size(321, 389);
             this.ProjectInfoPanel.TabIndex = 1;
             this.ProjectInfoPanel.Visible = false;
             // 
             // BindProjectButton
             // 
             this.BindProjectButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.BindProjectButton.Location = new System.Drawing.Point(3, 16);
+            this.BindProjectButton.Location = new System.Drawing.Point(3, 17);
             this.BindProjectButton.Name = "BindProjectButton";
-            this.BindProjectButton.Size = new System.Drawing.Size(323, 25);
+            this.BindProjectButton.Size = new System.Drawing.Size(321, 25);
             this.BindProjectButton.TabIndex = 0;
             this.BindProjectButton.Text = "Bind Project";
             this.BindProjectButton.UseVisualStyleBackColor = true;
@@ -166,12 +174,12 @@ namespace UnrealProjectTool
             // 
             // ActionsPanel
             // 
-            this.ActionsPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.ActionsPanel.BackColor = System.Drawing.Color.Gainsboro;
             this.ActionsPanel.Controls.Add(this.ActionTabs);
             this.ActionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ActionsPanel.Location = new System.Drawing.Point(358, 3);
+            this.ActionsPanel.Location = new System.Drawing.Point(356, 3);
             this.ActionsPanel.Name = "ActionsPanel";
-            this.ActionsPanel.Size = new System.Drawing.Size(823, 435);
+            this.ActionsPanel.Size = new System.Drawing.Size(819, 454);
             this.ActionsPanel.TabIndex = 1;
             // 
             // ActionTabs
@@ -181,22 +189,24 @@ namespace UnrealProjectTool
             this.ActionTabs.Location = new System.Drawing.Point(0, 0);
             this.ActionTabs.Name = "ActionTabs";
             this.ActionTabs.SelectedIndex = 1;
-            this.ActionTabs.Size = new System.Drawing.Size(823, 435);
+            this.ActionTabs.Size = new System.Drawing.Size(819, 454);
             this.ActionTabs.TabIndex = 0;
             // 
             // ModuleViewsTabPage
             // 
             this.ModuleViewsTabPage.Controls.Add(this.ModuleViewsLayout);
-            this.ModuleViewsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.ModuleViewsTabPage.Location = new System.Drawing.Point(4, 25);
             this.ModuleViewsTabPage.Name = "ModuleViewsTabPage";
             this.ModuleViewsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ModuleViewsTabPage.Size = new System.Drawing.Size(815, 409);
+            this.ModuleViewsTabPage.Size = new System.Drawing.Size(811, 425);
             this.ModuleViewsTabPage.TabIndex = 0;
             this.ModuleViewsTabPage.Text = "Modules";
             this.ModuleViewsTabPage.UseVisualStyleBackColor = true;
             // 
             // ModuleViewsLayout
             // 
+            this.ModuleViewsLayout.AutoSize = true;
+            this.ModuleViewsLayout.BackColor = System.Drawing.Color.Gainsboro;
             this.ModuleViewsLayout.ColumnCount = 1;
             this.ModuleViewsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.ModuleViewsLayout.Controls.Add(this.ModuleToolboxPanel, 0, 0);
@@ -209,17 +219,18 @@ namespace UnrealProjectTool
             this.ModuleViewsLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.ModuleViewsLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ModuleViewsLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.ModuleViewsLayout.Size = new System.Drawing.Size(809, 403);
+            this.ModuleViewsLayout.Size = new System.Drawing.Size(805, 419);
             this.ModuleViewsLayout.TabIndex = 1;
             // 
             // ModuleToolboxPanel
             // 
+            this.ModuleToolboxPanel.AutoSize = true;
             this.ModuleToolboxPanel.Controls.Add(this.NewModuleButton);
             this.ModuleToolboxPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ModuleToolboxPanel.Location = new System.Drawing.Point(3, 3);
             this.ModuleToolboxPanel.Name = "ModuleToolboxPanel";
             this.ModuleToolboxPanel.Padding = new System.Windows.Forms.Padding(5);
-            this.ModuleToolboxPanel.Size = new System.Drawing.Size(815, 94);
+            this.ModuleToolboxPanel.Size = new System.Drawing.Size(799, 94);
             this.ModuleToolboxPanel.TabIndex = 0;
             // 
             // NewModuleButton
@@ -227,7 +238,7 @@ namespace UnrealProjectTool
             this.NewModuleButton.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.NewModuleButton.Location = new System.Drawing.Point(5, 66);
             this.NewModuleButton.Name = "NewModuleButton";
-            this.NewModuleButton.Size = new System.Drawing.Size(805, 23);
+            this.NewModuleButton.Size = new System.Drawing.Size(789, 23);
             this.NewModuleButton.TabIndex = 1;
             this.NewModuleButton.Text = "Add New Module";
             this.NewModuleButton.UseVisualStyleBackColor = true;
@@ -241,27 +252,60 @@ namespace UnrealProjectTool
             this.ModuleViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ModuleViewPanel.Location = new System.Drawing.Point(3, 103);
             this.ModuleViewPanel.Name = "ModuleViewPanel";
-            this.ModuleViewPanel.Size = new System.Drawing.Size(815, 277);
+            this.ModuleViewPanel.Size = new System.Drawing.Size(799, 293);
             this.ModuleViewPanel.TabIndex = 0;
             // 
             // BoundProjectLabel
             // 
             this.BoundProjectLabel.AutoSize = true;
-            this.BoundProjectLabel.Location = new System.Drawing.Point(3, 441);
+            this.BoundProjectLabel.Location = new System.Drawing.Point(3, 460);
             this.BoundProjectLabel.Name = "BoundProjectLabel";
-            this.BoundProjectLabel.Size = new System.Drawing.Size(265, 13);
+            this.BoundProjectLabel.Size = new System.Drawing.Size(296, 16);
             this.BoundProjectLabel.TabIndex = 3;
             this.BoundProjectLabel.Text = "Press [Bind Project] to point UPT to a valid uproject file";
             this.BoundProjectLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // FormLayoutPanel
+            // 
+            this.FormLayoutPanel.BackColor = System.Drawing.Color.Transparent;
+            this.FormLayoutPanel.ColumnCount = 1;
+            this.FormLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.FormLayoutPanel.Controls.Add(this.MainFormLayoutPanel, 0, 1);
+            this.FormLayoutPanel.Controls.Add(this.ToolName, 0, 0);
+            this.FormLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FormLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.FormLayoutPanel.Name = "FormLayoutPanel";
+            this.FormLayoutPanel.RowCount = 2;
+            this.FormLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+            this.FormLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.FormLayoutPanel.Size = new System.Drawing.Size(1184, 561);
+            this.FormLayoutPanel.TabIndex = 0;
+            // 
+            // ToolName
+            // 
+            this.ToolName.AutoSize = true;
+            this.ToolName.BackColor = System.Drawing.Color.Transparent;
+            this.ToolName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ToolName.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ToolName.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ToolName.Location = new System.Drawing.Point(3, 0);
+            this.ToolName.Name = "ToolName";
+            this.ToolName.Size = new System.Drawing.Size(328, 75);
+            this.ToolName.TabIndex = 1;
+            this.ToolName.Text = "Unreal Project Tool";
+            this.ToolName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(1184, 461);
-            this.Controls.Add(this.MainFormLayoutPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.ClientSize = new System.Drawing.Size(1184, 561);
+            this.Controls.Add(this.FormLayoutPanel);
+            this.Font = new System.Drawing.Font("Microsoft YaHei UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Unreal Project Tool";
             this.MainFormLayoutPanel.ResumeLayout(false);
             this.MainFormLayoutPanel.PerformLayout();
             this.InfoPanel.ResumeLayout(false);
@@ -271,9 +315,12 @@ namespace UnrealProjectTool
             this.ActionsPanel.ResumeLayout(false);
             this.ActionTabs.ResumeLayout(false);
             this.ModuleViewsTabPage.ResumeLayout(false);
+            this.ModuleViewsTabPage.PerformLayout();
             this.ModuleViewsLayout.ResumeLayout(false);
             this.ModuleViewsLayout.PerformLayout();
             this.ModuleToolboxPanel.ResumeLayout(false);
+            this.FormLayoutPanel.ResumeLayout(false);
+            this.FormLayoutPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
