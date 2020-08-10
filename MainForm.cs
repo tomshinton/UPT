@@ -476,10 +476,7 @@ namespace UnrealProjectTool
                     InvalidFileList += InvalidFile.Key + System.Environment.NewLine;
                 }
 
-                DialogResult Result = MessageBox.Show(
-                    @"Would you like to correct the copyright notice on the following files?" + System.Environment.NewLine + InvalidFileList,
-                    @"Fixup Files",
-                    MessageBoxButtons.YesNo);
+                DialogResult Result = MessageBox.Show(@"Would you like to correct the copyright notice on " + InvalidFiles.Count + " files?", @"Fixup Files",  MessageBoxButtons.YesNo);
 
                 if(Result == DialogResult.Yes || Result == DialogResult.No)
                 {
