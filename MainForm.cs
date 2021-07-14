@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.IO.Compression;
 using System.Text.RegularExpressions;
+using UnrealProjectTool.Properties;
 
 namespace UnrealProjectTool
 {
@@ -306,6 +307,7 @@ namespace UnrealProjectTool
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.MainFormLayoutPanel.ResumeLayout(false);
             this.MainFormLayoutPanel.PerformLayout();
             this.InfoPanel.ResumeLayout(false);
@@ -341,14 +343,26 @@ namespace UnrealProjectTool
 
             if (BoundProjectDir != "")
             {
-                //Critical - caches all paths and files all necessary files
-                ProjectWorker = new UProjectWorker(BoundProjectDir);
+                SetupProjectWorker(BoundProjectDir);
 
-                BoundProjectLabel.Text = "Project found at: " + BoundProjectDir;
-
-                BuildProjectInfoPanel();
-                BuildModulePanel();
+                if (true)
+                {
+                    Settings.Default.SavedLastProjectPath = BoundProjectDir;
+                    Settings.Default.Save();
+                }
             }
+        }
+
+        //Critical - caches all paths and files all necessary files
+        private void SetupProjectWorker(string InBoundProjectDir)
+        {
+            //Critical - caches all paths and files all necessary files
+            ProjectWorker = new UProjectWorker(InBoundProjectDir);
+
+            BoundProjectLabel.Text = "Project found at: " + InBoundProjectDir;
+
+            BuildProjectInfoPanel();
+            BuildModulePanel();
         }
 
         private void BuildProjectInfoPanel()
@@ -699,5 +713,14 @@ namespace UnrealProjectTool
         private Form SourceScanOutput = new Form();
         private UProjectWorker ProjectWorker;
         static string EmptyModuleToken = @"Empty";
+        
+        private void MainForm_Shown(Object sender, EventArgs e)
+        {
+            string path = Settings.Default.SavedLastProjectPath;
+            if (path != "")
+            {
+                SetupProjectWorker(path);
+            }
+        }
     }
 }
