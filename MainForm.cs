@@ -29,6 +29,7 @@ namespace UnrealProjectTool
         private Panel ProjectActionsPanel;
         private TableLayoutPanel FormLayoutPanel;
         private Label ToolName;
+        private System.ComponentModel.IContainer components;
         private Panel ProjectInfoPanel;
 
         public MainForm()
@@ -287,7 +288,7 @@ namespace UnrealProjectTool
             this.ToolName.BackColor = System.Drawing.Color.Transparent;
             this.ToolName.Dock = System.Windows.Forms.DockStyle.Left;
             this.ToolName.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ToolName.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ToolName.ForeColor = GetColour();
             this.ToolName.Location = new System.Drawing.Point(3, 0);
             this.ToolName.Name = "ToolName";
             this.ToolName.Size = new System.Drawing.Size(328, 75);
@@ -577,14 +578,14 @@ namespace UnrealProjectTool
         {
             ModuleView NewModuleView = new ModuleView(InNewModuleData);
             NewModuleView.Dock = DockStyle.Top;
-
+            
             ModuleViewPanel.Controls.Add(NewModuleView);
             ProjectWorker.AddModuleToProxy(InNewModuleData);
 
             ZipFile.ExtractToDirectory(ProjectWorker.EmptyModuleFiles, Path.Combine(ProjectWorker.SourceDirectory, "Runtime"));
-
+            
             string NewDirectoryName = Path.Combine(ProjectWorker.SourceDirectory, InNewModuleData.Type, InNewModuleData.Name);
-
+            //Directory.CreateDirectory(NewDirectoryName);
 
             Directory.Move(Path.Combine(ProjectWorker.SourceDirectory, "Runtime", EmptyModuleToken), NewDirectoryName);
 
@@ -699,5 +700,11 @@ namespace UnrealProjectTool
         private Form SourceScanOutput = new Form();
         private UProjectWorker ProjectWorker;
         static string EmptyModuleToken = @"Empty";
+
+        private Color GetColour()
+        {
+            Random RNG = new Random();
+            return Color.FromArgb(RNG.Next(0, 255), RNG.Next(0, 255), RNG.Next(0, 255));
+        }
     }
 }
