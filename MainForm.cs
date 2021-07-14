@@ -291,6 +291,7 @@ namespace UnrealProjectTool
             this.ToolName.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ToolName.Location = new System.Drawing.Point(3, 0);
             this.ToolName.Name = "ToolName";
+            this.ToolName.ForeColor = GetColour();
             this.ToolName.Size = new System.Drawing.Size(328, 75);
             this.ToolName.TabIndex = 1;
             this.ToolName.Text = "Unreal Project Tool";
