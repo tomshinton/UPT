@@ -8,6 +8,8 @@ using System.Linq;
 using System.IO.Compression;
 using UnrealProjectTool.Properties;
 
+using System.Reflection;
+
 namespace UnrealProjectTool
 {
     class MainForm : Form
