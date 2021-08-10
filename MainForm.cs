@@ -545,6 +545,9 @@ namespace UnrealProjectTool
 
         private void TryApplyCopyrightToFiles(Dictionary<string, string> InFiles)
         {
+            //Create a new Filespec list for potential checkouts
+            List<Perforce.P4.FileSpec> NewFiles = new List<Perforce.P4.FileSpec>();
+
             string NewCopyrightLine = "// " + ProjectWorker.DefaultGameConfigReader.GetValForKey(@"CopyrightNotice");
 
             int NumFixes = 0;
@@ -569,6 +572,8 @@ namespace UnrealProjectTool
                     }
 
                     WriteToFile(FilePair.Key, FileCopy);
+                    NewFiles.Add(new Perforce.P4.FileSpec(new Perforce.P4.LocalPath(FilePair.Key)));
+
                     NumFixes++;
                 }
                 else if (CurrentFirstLine.Contains(@"#") || CurrentFirstLine.Contains(@"using"))
@@ -584,6 +589,8 @@ namespace UnrealProjectTool
                     FileCopy = CopyAsList.ToArray();
 
                     WriteToFile(FilePair.Key, FileCopy);
+                    NewFiles.Add(new Perforce.P4.FileSpec(new Perforce.P4.LocalPath(FilePair.Key)));
+
                     NumFixes++;
                 }
                 else
@@ -593,10 +600,26 @@ namespace UnrealProjectTool
             }
 
             MessageBox.Show("Fixed up " + NumFixes + " files", @"Copyright fixup results");
+
+            //Create a CL for our new files
+            if (ProjectWorker.ConnectedRepo != null)
+            {
+                Perforce.P4.Changelist NewChangelist = new Perforce.P4.Changelist();
+                NewChangelist.Type = ChangeListType.Restricted;
+                NewChangelist.Description = "[Copyright] Fixedup Copyright";
+                Perforce.P4.Changelist CreatedChangelist = ProjectWorker.ConnectedRepo.CreateChangelist(NewChangelist);
+
+                Perforce.P4.Options EditOptions = new Perforce.P4.Options();
+                EditOptions["-c"] = String.Format("{0}", CreatedChangelist.Id);
+                ProjectWorker.ConnectedRepo.Connection.Client.EditFiles(EditOptions, NewFiles.ToArray());
+            }
         }
 
         private void WriteToFile(string InPath, string[] NewFileText)
         {
+            System.IO.FileInfo PrimaryBuildFileInfo = new System.IO.FileInfo(InPath);
+            PrimaryBuildFileInfo.IsReadOnly = false;
+
             System.IO.File.WriteAllLines(InPath, NewFileText);
         }
 
