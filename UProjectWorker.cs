@@ -6,6 +6,20 @@ using System.IO;
 
 namespace UnrealProjectTool
 {
+    public class PluginData
+    {
+        public PluginData(string InName, bool InEnabled)
+        {
+            Name = InName;
+            Enabled = InEnabled;
+        }
+
+        public string Name { get; set; }
+        public bool Enabled { get; set; }
+
+        public List<string> SupportedTargetPlatforms { get; set; }
+    }
+
     public class ModuleData
     {
         public ModuleData(string InName, string InType, string InLoadingPhase)
@@ -33,6 +47,8 @@ namespace UnrealProjectTool
         public string Description { get; set; }
         [JsonProperty(Order = 5)]
         public List<ModuleData> Modules = new List<ModuleData>();
+        [JsonProperty(Order = 6)]
+        public List<PluginData> Plugins { get; set; }
     }
 
     class UProjectWorker
