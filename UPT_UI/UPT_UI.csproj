@@ -1,0 +1,124 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName />
+    <SccProvider />
+    <SccAuxPath />
+    <SccLocalPath />
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="BindProject.png" />
+    <None Remove="BlankDriveIcon.png" />
+    <None Remove="Build.png" />
+    <None Remove="Deploy.png" />
+    <None Remove="Exit.png" />
+    <None Remove="Minimize.png" />
+    <None Remove="Resources\BindProject.png" />
+    <None Remove="Resources\Exit.png" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Black.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-BlackItalic.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Bold.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-BoldItalic.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Italic.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Light.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-LightItalic.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Medium.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-MediumItalic.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Regular.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-Thin.ttf" />
+    <None Remove="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
+    <None Remove="Resources\Minimize.png" />
+    <None Remove="Server.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\BindProject.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Exit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="BlankDriveIcon.png" />
+    <Resource Include="Build.png" />
+    <Resource Include="Deploy.png" />
+    <Resource Include="Resources\Deploy.png" />
+    <Resource Include="Exit.png" />
+    <Resource Include="Minimize.png" />
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Black.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Roboto\Roboto-BlackItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Bold.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Roboto\Roboto-BoldItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Italic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Light.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Roboto\Roboto-LightItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Medium.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Roboto\Roboto-MediumItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Roboto\Roboto-Thin.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Roboto\Roboto-ThinItalic.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="BindProject.png" />
+    <Resource Include="Server.png" />
+    <Content Include="Resources\Minimize.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Drive.v2" Version="1.57.0.2746" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.57.0.2746" />
+    <PackageReference Include="Google.Apis.Oauth2.v2" Version="1.57.0.1869" />
+    <PackageReference Include="Google.Apis.PeopleService.v1" Version="1.57.0.2707" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="WindowsAPICodePack" Version="1.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

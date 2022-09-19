@@ -4,26 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-using System.Windows.Forms;
-using Perforce.P4;
-using UnrealProjectTool.Properties;
-
 namespace UnrealProjectTool
 {
-    public class PluginData
-    {
-        public PluginData(string InName, bool InEnabled)
-        {
-            Name = InName;
-            Enabled = InEnabled;
-        }
-
-        public string Name { get; set; }
-        public bool Enabled { get; set; }
-
-        public List<string> SupportedTargetPlatforms { get; set; }
-    }
-
     public class ModuleData
     {
         public ModuleData(string InName, string InType, string InLoadingPhase)
@@ -51,52 +33,22 @@ namespace UnrealProjectTool
         public string Description { get; set; }
         [JsonProperty(Order = 5)]
         public List<ModuleData> Modules = new List<ModuleData>();
-        [JsonProperty(Order = 6)]
-        public List<PluginData> Plugins { get; set; }
     }
 
     class UProjectWorker
     {
-        public delegate void OnProjectInitialiserDelegate();
-        public OnProjectInitialiserDelegate OnProjectInitialised;
         public UProjectWorker(string InProjectFile)
         {
             ProjectFile = InProjectFile;
+
+            GenerateProjectProxyObject();
+
+            DefaultGameConfigReader = new IniReader(CacheDefaultGamePath());
+
+            CacheSourcePath();
+            CachePrimaryGameplayBuildFile();
         }
-        public void Initialise()
-        {
-            //If the file is read only, it is likely under source control - try and connect to P4, if we can
-            System.IO.FileInfo ProjectInfo = new System.IO.FileInfo(@ProjectFile);
-            DialogResult ReadOnlyResult = DialogResult.None;
-            if (ProjectInfo.IsReadOnly && ConnectedRepo == null)
-            {
-                ReadOnlyResult = MessageBox.Show("The file " + ProjectFile + " is read only - module injection will fail - would you like to connect to Perforce?", "File is Read-Only", MessageBoxButtons.YesNoCancel);
-            }
 
-            if (ReadOnlyResult == DialogResult.No || ReadOnlyResult == DialogResult.None)
-            {
-                InitialiseProjectWorker();
-            }
-            else if (ReadOnlyResult == DialogResult.Yes)
-            {
-                P4Connection NewConnectionWindow = new P4Connection();
-
-                //bind to overloaded ProjectWorker, caching connection
-                NewConnectionWindow.OnP4Connected = InitialiseProjectWorker;
-
-                if(!NewConnectionWindow.TryConnectFromPersistance() && NewConnectionWindow != null)
-                {
-                    try
-                    {
-                        NewConnectionWindow.Show();
-                    }
-                    catch(Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                }
-            }
-        }
         public void AddModuleToProxy(ModuleData InNewModule)
         {
             Proxy.Modules.Add(InNewModule);
@@ -177,49 +129,12 @@ namespace UnrealProjectTool
         private void CachePrimaryGameplayBuildFile()
         {
             string CurrentPrimaryModuleName = DefaultGameConfigReader.GetValForKey(@"ProjectName").Replace(" ", "");
-            PrimaryGameplayBuildFile = Path.Combine(SourceDirectory, CurrentPrimaryModuleName, CurrentPrimaryModuleName) + ".Build.cs";
+            PrimaryGameplayBuildFile = Path.Combine(SourceDirectory, CurrentPrimaryModuleName, CurrentPrimaryModuleName) + ".build.cs";
             PrimaryModuleName = CurrentPrimaryModuleName;
         }
 
-        public bool IsValid()
-        {
-            return ProjectFile != "" && Proxy != null;
-        }
-
-        public void InitialiseProjectWorker(Perforce.P4.Repository InRepo)
-        {
-            ConnectedRepo = InRepo;
-
-            InitialiseProjectWorker();
-        }
-        public void InitialiseProjectWorker()
-        {
-            GenerateProjectProxyObject();
-
-            DefaultGameConfigReader = new IniReader(CacheDefaultGamePath());
-
-            CacheSourcePath();
-            CachePrimaryGameplayBuildFile();
-
-            OnProjectInitialised.Invoke();
-        }
-
-        public string RepoAsString()
-        {
-            if(ConnectedRepo == null)
-            {
-                return "";
-            }
-
-            string RepoAsString = "    - [Perforce] " 
-                      + ConnectedRepo.Connection.UserName + ", "
-                      + ConnectedRepo.Connection.Server.Address.ToString();
-
-            return RepoAsString;
-        }
-
         public UProjectProxy Proxy;
-        public string ProjectFile;
+        private string ProjectFile;
 
         public IniReader DefaultGameConfigReader;
 
@@ -230,7 +145,5 @@ namespace UnrealProjectTool
         public string PrimaryModuleName = "";
 
         static public string DependencyInjectionString = "//AutoGenerated from UPT - https://github.com/tomshinton/UPT";
-
-        public Repository ConnectedRepo;
     }
 }
