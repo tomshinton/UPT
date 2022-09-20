@@ -56,5 +56,36 @@
             <Setter Property="Opacity" Value="0.5"></Setter>
             <Setter Property="FontFamily" Value="pack://application:,,,/Resources/Fonts/Roboto/#Roboto"></Setter>
         </Style>
+
+        <!-- Tabs and Tab Controls -->
+        <Style TargetType="TabItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Name="Border" Padding="10" Background="#202027" >
+                            <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#202027" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="#1A1A1A" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Tabs and Tab Controls -->
+        <Style TargetType="TabControl">
+            <Setter Property="Background" Value="{x:Null}"></Setter>
+            <Setter Property="BorderBrush" Value="{x:Null}"></Setter>
+        </Style>
     </Application.Resources>
 </Application>

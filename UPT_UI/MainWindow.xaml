@@ -77,13 +77,19 @@
             </Border>
         </StackPanel>
         <Grid x:Name="Workspace" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
-            <Border Grid.Column="1" CornerRadius="20" BorderThickness="1" Background="{x:Null}">
-                <DockPanel Background="#222730" ClipToBounds="True">
-                    <ScrollViewer x:Name="BuildOutlogLogScrollViewer" ScrollChanged="BuildOutlogLogScrollViewer_ScrollChanged">
-                        <TextBlock x:Name="BuildOutputLog" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBlock>
-                    </ScrollViewer>
-                </DockPanel>
-            </Border>
+            <TabControl>
+                <TabItem Header="Output" Background="Black">
+                    <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF1A1A1A" ClipToBounds="True">
+                        <ScrollViewer x:Name="BuildOutlogLogScrollViewer" ScrollChanged="BuildOutlogLogScrollViewer_ScrollChanged">
+                            <TextBlock x:Name="BuildOutputLog" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto">THIU[awipjda[wpidha[podhawd</TextBlock>
+                        </ScrollViewer>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Modules" Background="{x:Null}"></TabItem>
+            </TabControl>
+
+
+
         </Grid>
     </Grid>
 </Window>

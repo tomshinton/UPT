@@ -60,7 +60,7 @@ namespace UPT_UI
         {
             CommonOpenFileDialog FindProjectDialog = new CommonOpenFileDialog();
 
-            string InitialDirectory = Properties.Settings.Default.LastProjectDir != null ? Directory.GetParent(Properties.Settings.Default.LastProjectDir).ToString() : @"C:\";
+            string InitialDirectory = Properties.Settings.Default.LastProjectDir != "" ? Directory.GetParent(Properties.Settings.Default.LastProjectDir).ToString() : @"C:\";
 
             FindProjectDialog.Title = "Browse for a uProject file to bind to";
             FindProjectDialog.InitialDirectory = InitialDirectory;
@@ -75,7 +75,7 @@ namespace UPT_UI
                 CommonOpenFileDialog FindEngineDialog = new CommonOpenFileDialog();
                 FindEngineDialog.Title = "Browse to this project's engine directory";
 
-                string EngineInitialDirectory = Properties.Settings.Default.LastEngineDir != null ? Directory.GetParent(Properties.Settings.Default.LastEngineDir).ToString() : @"C:\";
+                string EngineInitialDirectory = Properties.Settings.Default.LastEngineDir != "" ? Directory.GetParent(Properties.Settings.Default.LastEngineDir).ToString() : @"C:\";
                 FindEngineDialog.InitialDirectory = EngineInitialDirectory;
                 FindEngineDialog.IsFolderPicker = true;
 
