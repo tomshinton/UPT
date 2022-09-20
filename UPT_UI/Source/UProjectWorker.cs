@@ -67,7 +67,7 @@ namespace UPT_UI
         }
     }
 
-    class UProjectWorker
+    public class UProjectWorker
     {
         public delegate void OnProjectInitialised();
         public OnProjectInitialised OnProjectInitialisedDel;

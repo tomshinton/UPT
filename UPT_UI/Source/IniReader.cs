@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-class IniReader
+public class IniReader
 {
     public IniReader(string InPath)
     {

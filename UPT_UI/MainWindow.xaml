@@ -76,8 +76,8 @@
                 </StackPanel>
             </Border>
         </StackPanel>
-        <Grid x:Name="Workspace" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
-            <TabControl>
+        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+            <TabControl x:Name="Workspace" IsEnabled="False">
                 <TabItem Header="Output">
                     <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF1A1A1A" ClipToBounds="True">
                         <ScrollViewer x:Name="BuildOutlogLogScrollViewer" ScrollChanged="BuildOutlogLogScrollViewer_ScrollChanged">
@@ -88,7 +88,7 @@
                 <TabItem Header="Modules" Background="{x:Null}">
 
                     <DockPanel>
-                        <Button x:Name="NewModuleButton" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Top">
+                        <Button x:Name="NewModuleButton" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Top" Click="NewModuleButton_Click">
                             <TextBlock Padding="20">New Module</TextBlock>
                         </Button>
                         <ScrollViewer DockPanel.Dock ="Bottom" VerticalScrollBarVisibility="visible" VerticalAlignment="Stretch">

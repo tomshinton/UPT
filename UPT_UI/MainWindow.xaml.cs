@@ -7,15 +7,16 @@ using System.Windows.Controls;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using UPT_UI.Controls;
+using UPT_UI.Windows;
 
 namespace UPT_UI
 {
     public partial class MainWindow : Window
     {
-        private static UProjectWorker ProjectWorker;
+        public static UProjectWorker ProjectWorker;
         public static IAuthHandler CurrAuthHandler = new GoogleAuthHandler();
+        
         static SynchronizationContext SyncContext;
-
         static MainWindow Instance;
 
         public MainWindow()
@@ -105,8 +106,10 @@ namespace UPT_UI
             SyncContext.Post(_ =>
             {
                 UnrealProjectToolTitle.Text = "UPT - " + ProjectWorker.GetProjectName();
+                Workspace.IsEnabled = true;
 
                 BuildModulePanel();
+
                 //BuildProjectInfoPanel();
             }, null);
         }
@@ -203,6 +206,12 @@ namespace UPT_UI
                     ModulePanel.Children.Add(NewModuleView);
                 }
             }
+        }
+
+        private void NewModuleButton_Click(object sender, RoutedEventArgs e)
+        {
+            NewModuleView NewModuleWindow = new NewModuleView();
+            NewModuleWindow.Show();
         }
     }
 }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UnrealProjectTool.Properties {
+namespace UPT_UI.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace UnrealProjectTool.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UnrealProjectTool.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UPT_UI.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,41 +61,12 @@ namespace UnrealProjectTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        internal static string EmptyModuleFiles {
-            get {
-                return ResourceManager.GetString("EmptyModuleFiles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] EmptyModuleTemplate {
             get {
                 object obj = ResourceManager.GetObject("EmptyModuleTemplate", resourceCulture);
                 return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap UPT_Background {
-            get {
-                object obj = ResourceManager.GetObject("UPT_Background", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap UPT_Icon {
-            get {
-                object obj = ResourceManager.GetObject("UPT_Icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
