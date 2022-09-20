@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using UPT_UI.Controls;
 
 namespace UPT_UI
 {
@@ -97,9 +98,6 @@ namespace UPT_UI
 
             //Called from other thread - any resulting function calls need to be synced
             MainWindow.ProjectWorker.OnProjectInitialisedDel += OnProjectInitialised;
-
-            //BuildProjectInfoPanel();
-            //BuildModulePanel();
         }
 
         private void OnProjectInitialised()
@@ -107,6 +105,9 @@ namespace UPT_UI
             SyncContext.Post(_ =>
             {
                 UnrealProjectToolTitle.Text = "UPT - " + ProjectWorker.GetProjectName();
+
+                BuildModulePanel();
+                //BuildProjectInfoPanel();
             }, null);
         }
 
@@ -189,6 +190,19 @@ namespace UPT_UI
         public static string GetProjectName()
         {
             return MainWindow.ProjectWorker.GetProjectName();
+        }
+
+        private void BuildModulePanel()
+        {
+            StackPanel ModulePanel = (StackPanel)Instance.FindName("ModuleviewContainer");
+            if (ModulePanel != null)
+            {
+                foreach(ModuleData Module in MainWindow.ProjectWorker.Proxy.Modules)
+                {
+                    ModuleView NewModuleView = new ModuleView(Module);
+                    ModulePanel.Children.Add(NewModuleView);
+                }
+            }
         }
     }
 }

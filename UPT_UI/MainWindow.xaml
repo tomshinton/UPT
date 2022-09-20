@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:UPT_UI"
+        xmlns:local="clr-namespace:UPT_UI" xmlns:controls="clr-namespace:UPT_UI.Controls"
         mc:Ignorable="d"
         Title="Unreal Project Tool" Height="720" Width="1280"
         WindowStyle="None"
@@ -78,18 +78,26 @@
         </StackPanel>
         <Grid x:Name="Workspace" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
             <TabControl>
-                <TabItem Header="Output" Background="Black">
+                <TabItem Header="Output">
                     <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF1A1A1A" ClipToBounds="True">
                         <ScrollViewer x:Name="BuildOutlogLogScrollViewer" ScrollChanged="BuildOutlogLogScrollViewer_ScrollChanged">
-                            <TextBlock x:Name="BuildOutputLog" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto">THIU[awipjda[wpidha[podhawd</TextBlock>
+                            <TextBlock x:Name="BuildOutputLog" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBlock>
                         </ScrollViewer>
                     </DockPanel>
                 </TabItem>
-                <TabItem Header="Modules" Background="{x:Null}"></TabItem>
+                <TabItem Header="Modules" Background="{x:Null}">
+
+                    <DockPanel>
+                        <Button x:Name="NewModuleButton" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Top">
+                            <TextBlock Padding="20">New Module</TextBlock>
+                        </Button>
+                        <ScrollViewer DockPanel.Dock ="Bottom" VerticalScrollBarVisibility="visible" VerticalAlignment="Stretch">
+                            <StackPanel x:Name="ModuleviewContainer">
+                            </StackPanel>
+                        </ScrollViewer>
+                    </DockPanel>
+                </TabItem>
             </TabControl>
-
-
-
         </Grid>
     </Grid>
 </Window>
