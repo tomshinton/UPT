@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
+
 using UPT_UI.Controls;
+using UPT_UI.Source.SourceControl;
 using UPT_UI.Windows;
 
 namespace UPT_UI
@@ -14,10 +14,13 @@ namespace UPT_UI
     public partial class MainWindow : Window
     {
         public static UProjectWorker ProjectWorker;
+
+        //Make these dynamic when more API support is added - starting with GDrive and P4 for now
         public static IAuthHandler CurrAuthHandler = new GoogleAuthHandler();
-        
+        public static ISourceControlHandler SourceControlHandler = new PerforceControlHandler();
+
         static SynchronizationContext SyncContext;
-        static MainWindow Instance;
+        public static MainWindow Instance;
 
         public MainWindow()
         {
@@ -195,7 +198,7 @@ namespace UPT_UI
             return MainWindow.ProjectWorker.GetProjectName();
         }
 
-        private void BuildModulePanel()
+        public void BuildModulePanel()
         {
             StackPanel ModulePanel = (StackPanel)Instance.FindName("ModuleviewContainer");
             if (ModulePanel != null)
@@ -212,6 +215,15 @@ namespace UPT_UI
         {
             NewModuleView NewModuleWindow = new NewModuleView();
             NewModuleWindow.Show();
+        }
+
+        private void SourceControlButton_Click(object sender, RoutedEventArgs e)
+        {
+            string Url = "ec2-18-217-78-116.us-east-2.compute.amazonaws.com:1666";
+            string User = "toms";
+            string Workspace = "Tom";
+
+            SourceControlHandler.Connect(Url, User, Workspace);
         }
     }
 }

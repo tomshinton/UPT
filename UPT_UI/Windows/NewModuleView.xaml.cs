@@ -117,6 +117,9 @@ namespace UPT_UI.Windows
         {
             MainWindow.ProjectWorker.AddModuleToProxy(InNewModuleData);
 
+            CLDesc = "[UPT] Create " + InNewModuleData.Name + " module";
+            MainWindow.Instance.BuildModulePanel();
+
             string TempZipDir = System.IO.Path.GetTempPath();
 
             if (Directory.Exists(System.IO.Path.Combine(TempZipDir, EmptyModuleToken)))
@@ -152,8 +155,8 @@ namespace UPT_UI.Windows
                 System.IO.File.Move(CurrFile, NewName);
             }
 
-            CopyFolder(TempRenamedDir, NewDirectoryName);
-
+            MainWindow.SourceControlHandler.CheckoutFiles(CopyFolder(TempRenamedDir, NewDirectoryName), CLDesc);
+            
             if (InNewModuleData.Type == "Runtime")
             {
                 string[] PrimaryBuildFileContents = File.ReadAllLines(MainWindow.ProjectWorker.PrimaryGameplayBuildFile);
@@ -199,32 +202,48 @@ namespace UPT_UI.Windows
                     }
                 }
 
-                File.WriteAllLines(MainWindow.ProjectWorker.PrimaryGameplayBuildFile, ContentsAsList.ToArray());
+                if(MainWindow.SourceControlHandler.CheckoutFile(MainWindow.ProjectWorker.PrimaryGameplayBuildFile, CLDesc))
+                {
+                    File.WriteAllLines(MainWindow.ProjectWorker.PrimaryGameplayBuildFile, ContentsAsList.ToArray());
+                }
             }
 
+            MainWindow.SourceControlHandler.CheckoutFile(MainWindow.ProjectWorker.ProjectFile, CLDesc);
             MainWindow.ProjectWorker.Save();
         }
 
-        static public void CopyFolder(string sourceFolder, string destFolder)
+        public List<string> CopyFolder(string InSourceFolder, string InDestFolder)
         {
-            if (!Directory.Exists(destFolder))
-                Directory.CreateDirectory(destFolder);
-            string[] files = Directory.GetFiles(sourceFolder);
-            foreach (string file in files)
+            List<string> NewLocations = new List<string>();
+
+            if (!Directory.Exists(InDestFolder))
             {
-                string name = Path.GetFileName(file);
-                string dest = Path.Combine(destFolder, name);
-                File.Copy(file, dest);
+                Directory.CreateDirectory(InDestFolder);
             }
-            string[] folders = Directory.GetDirectories(sourceFolder);
-            foreach (string folder in folders)
+
+            string[] Files = Directory.GetFiles(InSourceFolder);
+            foreach (string FoundFile in Files)
             {
-                string name = Path.GetFileName(folder);
-                string dest = Path.Combine(destFolder, name);
-                CopyFolder(folder, dest);
+                string FileName = Path.GetFileName(FoundFile);
+                string DestinationFile = Path.Combine(InDestFolder, FileName);
+
+                File.Copy(FoundFile, DestinationFile);
+
+                NewLocations.Add(DestinationFile);
             }
+
+            string[] Folders = Directory.GetDirectories(InSourceFolder);
+            foreach (string Folder in Folders)
+            {
+                string FolderName = Path.GetFileName(Folder);
+                string Destination = Path.Combine(InDestFolder, FolderName);
+                CopyFolder(Folder, Destination);
+            }
+
+            return NewLocations;
         }
 
         static string EmptyModuleToken = @"Empty";
+        string CLDesc = "";
     }
 }

@@ -137,6 +137,11 @@ namespace UPT_UI
 
         public void Save()
         {
+            if (MainWindow.SourceControlHandler.IsInitialised())
+            {
+                MainWindow.SourceControlHandler.CheckoutFile(ProjectFile);
+            }
+
             string SerializedObject = JsonConvert.SerializeObject(Proxy, Formatting.Indented, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -485,7 +490,7 @@ namespace UPT_UI
 
         public UProjectProxy Proxy;
 
-        private string ProjectFile;
+        public string ProjectFile;
         private string EngineDirectory;
 
         public IniReader DefaultGameConfigReader;
