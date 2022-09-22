@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -223,7 +224,10 @@ namespace UPT_UI
             string User = "toms";
             string Workspace = "Tom";
 
-            SourceControlHandler.Connect(Url, User, Workspace);
+            Task.Factory.StartNew(() =>
+            {
+                SourceControlHandler.Connect(Url, User, Workspace);
+            });           
         }
     }
 }
