@@ -20,7 +20,7 @@ namespace UPT_UI
         public static IAuthHandler CurrAuthHandler = new GoogleAuthHandler();
         public static ISourceControlHandler SourceControlHandler = new PerforceControlHandler();
 
-        static SynchronizationContext SyncContext;
+        public static SynchronizationContext SyncContext;
         public static MainWindow Instance;
 
         public MainWindow()
@@ -231,6 +231,16 @@ namespace UPT_UI
             {
                 SourceControlHandler.Connect(Url, User, Workspace);
             });           
+        }
+
+        public static void ShowOutput(bool ClearExistingContent)
+        {
+            if (ClearExistingContent)
+            {
+                MainWindow.ClearProgress();
+            }
+            
+            MainWindow.Instance.Workspace.SelectedItem = MainWindow.Instance.OutputTab;
         }
     }
 }

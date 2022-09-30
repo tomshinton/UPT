@@ -104,7 +104,9 @@ namespace UPT_UI
                     CacheTargets();
 
                     Properties.Settings.Default.LastEngineDir = InEngineDirectory;
-
+                    
+                    Properties.Settings.Default.Save();
+                    
                     OnProjectInitialisedDel(true);
                 }
                 else

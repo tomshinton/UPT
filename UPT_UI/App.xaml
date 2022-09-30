@@ -19,7 +19,8 @@
             <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
             <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
             <Setter Property="Opacity" Value="0.5"></Setter>
-
+            <Setter Property="Margin" Value="10"></Setter>
+            
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">

@@ -83,15 +83,19 @@
         </StackPanel>
         <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
             <TabControl x:Name="Workspace" IsEnabled="False">
-                <TabItem Header="Output">
+                <TabItem x:Name="OutputTab" Header="Output">
                     <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF1A1A1A" ClipToBounds="True">
                         <ScrollViewer x:Name="BuildOutlogLogScrollViewer" ScrollChanged="BuildOutlogLogScrollViewer_ScrollChanged">
                             <TextBlock x:Name="BuildOutputLog" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBlock>
                         </ScrollViewer>
                     </DockPanel>
                 </TabItem>
+                <TabItem Header="Project" Background="{x:Null}">
+                    <StackPanel Background="#FF1A1A1A">
+                        <controls:ProjectView DockPanel.Dock="Top"></controls:ProjectView>
+                    </StackPanel>
+                </TabItem>
                 <TabItem Header="Modules" Background="{x:Null}">
-
                     <DockPanel>
                         <Button x:Name="NewModuleButton" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Top" Click="NewModuleButton_Click">
                             <TextBlock Padding="20">New Module</TextBlock>
