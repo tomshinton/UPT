@@ -42,8 +42,12 @@
             <TextBlock x:Name="ErrorString" Visibility="Visible" Foreground="Red" HorizontalAlignment="Center" Padding="0, 10, 0, 0" TextWrapping="Wrap">Your module isnt valid because of XYZ reasons</TextBlock>
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
-            <Button x:Name="AddModuleButton" Click="AddModuleButton_Click" Margin="10">Add Module</Button>
-            <Button x:Name="CancelButton" Click="CancelButton_Click" Margin="10">Cancel</Button>
+            <Button x:Name="AddModuleButton" Click="AddModuleButton_Click" Margin="10">
+                <TextBlock Padding="10" Opacity="1">Add Module</TextBlock>
+            </Button>
+            <Button x:Name="CancelButton" Click="CancelButton_Click" Margin="10">
+                <TextBlock Padding="10" Opacity="1">Cancel</TextBlock>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

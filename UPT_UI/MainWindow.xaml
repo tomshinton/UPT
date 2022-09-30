@@ -98,7 +98,7 @@
                 <TabItem Header="Modules" Background="{x:Null}">
                     <DockPanel>
                         <Button x:Name="NewModuleButton" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Top" Click="NewModuleButton_Click">
-                            <TextBlock Padding="20">New Module</TextBlock>
+                            <TextBlock Padding="20" Opacity="1">New Module</TextBlock>
                         </Button>
                         <ScrollViewer DockPanel.Dock ="Bottom" VerticalScrollBarVisibility="visible" VerticalAlignment="Stretch">
                             <StackPanel x:Name="ModuleviewContainer">

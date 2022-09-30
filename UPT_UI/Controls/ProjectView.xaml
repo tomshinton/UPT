@@ -13,8 +13,12 @@
                 <TextBlock x:Name="CopyrightText">Copyright Notice: Some copyright notice</TextBlock>
                 <TextBlock x:Name="ProjectVersionText">Project Version: Default</TextBlock>
             </StackPanel>
-                <Button x:Name="FixCopyrightButton" Content="Fixup Copyright" Width="auto" Click="FixCopyrightButton_OnClick"></Button>
-                <Button x:Name="DeleteEmptyDirectoryButton" Content="Delete empty directories" Width="auto" Click="DeleteEmptyDirectoryButton_OnClick"></Button>
+                <Button x:Name="FixCopyrightButton" Padding="20" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="FixCopyrightButton_OnClick">
+                    <TextBlock Padding="10" Opacity="1">Fixup Copyright</TextBlock>
+                </Button>
+                <Button x:Name="DeleteEmptyDirectoryButton" Padding="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="auto" Click="DeleteEmptyDirectoryButton_OnClick">
+                    <TextBlock Padding="10" Opacity="1">Delete empty directories</TextBlock>
+                </Button>
                 </StackPanel>
         </Border>
     </Grid>
