@@ -105,17 +105,20 @@ namespace UPT_UI
             MainWindow.ProjectWorker.OnProjectInitialisedDel += OnProjectInitialised;
         }
 
-        private void OnProjectInitialised()
+        private void OnProjectInitialised(bool InWasSuccessful)
         {
-            SyncContext.Post(_ =>
+            if (InWasSuccessful)
             {
-                UnrealProjectToolTitle.Text = "UPT - " + ProjectWorker.GetProjectName();
-                Workspace.IsEnabled = true;
+                SyncContext.Post(_ =>
+                {
+                    UnrealProjectToolTitle.Text = "UPT - " + ProjectWorker.GetProjectName();
+                    Workspace.IsEnabled = true;
 
-                BuildModulePanel();
+                    BuildModulePanel();
 
-                //BuildProjectInfoPanel();
-            }, null);
+                    //BuildProjectInfoPanel();
+                }, null);
+            }
         }
 
         private void DeployButton_Click(object sender, RoutedEventArgs e)
