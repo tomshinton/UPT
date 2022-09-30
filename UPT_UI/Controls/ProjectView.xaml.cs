@@ -153,11 +153,25 @@ namespace UPT_UI.Controls
         }
         private void DeleteEmptyDirectoryButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            MainWindow.ShowOutput(true);
+            CheckDirectoryIsEmpty(MainWindow.ProjectWorker.SourceDirectory);
         }
-
-        private void FixupCopyright()
+        private void CheckDirectoryIsEmpty(string InDirectory)
         {
+            foreach (string Dir in Directory.GetDirectories(InDirectory))
+            {
+                CheckDirectoryIsEmpty(Dir);
+                if (Directory.GetFiles(Dir).Length == 0 &&
+                    Directory.GetDirectories(Dir).Length == 0)
+                {
+                    Directory.Delete(Dir, false);
+                    MainWindow.ReportProgress("[Directory Check - FAILED] Directory " + Dir + " is empty deleting");
+                }
+                else
+                {
+                    MainWindow.ReportProgress("[Directory Check - PASSED] Directory " + Dir + " is not empty - continuing");
+                }
+            }
         }
     }
 }
