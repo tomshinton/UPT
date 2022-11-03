@@ -23,7 +23,7 @@ namespace UPT_UI.Source.SourceControl
             {
                 if(Connection.Connect(null))
                 {
-                    Perforce.P4.Credential Cred = Connection.Login("s004524A!");
+                    Perforce.P4.Credential Cred = Connection.Login(InPassword);
 
                     if (Cred.Ticket != "")
                     {

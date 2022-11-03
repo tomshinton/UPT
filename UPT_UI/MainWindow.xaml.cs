@@ -223,14 +223,8 @@ namespace UPT_UI
 
         private void SourceControlButton_Click(object sender, RoutedEventArgs e)
         {
-            string Url = "ec2-18-217-78-116.us-east-2.compute.amazonaws.com:1666";
-            string User = "toms";
-            string Workspace = "Tom";
-
-            Task.Factory.StartNew(() =>
-            {
-                SourceControlHandler.Connect(Url, User, Workspace);
-            });           
+            PerforceConnectWindow NewPerforceConnectionWindow = new PerforceConnectWindow();
+            NewPerforceConnectionWindow.Show();
         }
 
         public static void ShowOutput(bool ClearExistingContent)

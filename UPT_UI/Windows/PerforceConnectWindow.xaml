@@ -1,0 +1,39 @@
+﻿<Window x:Class="UPT_UI.Windows.PerforceConnectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:UPT_UI.Windows"
+        mc:Ignorable="d"
+                WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="#202027"
+        Width="600"
+        Height="300">
+        <Grid Background="#1A1A1A">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DockPanel>
+            <TextBlock FontSize="15" Padding="10, 5, 0, 5" Background="#202027">Connect to Perforce</TextBlock>
+        </DockPanel>
+        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Width="500">
+            <TextBox x:Name="ServerURLBox" Padding="5" Margin="5" >ServerURL</TextBox>
+            <TextBox x:Name="UserNameBox" Padding="5" Margin="5" >Username</TextBox>
+            <TextBox x:Name="WorkspaceNameBox" Padding="5" Margin="5" >Workspace</TextBox>
+            <TextBox x:Name="PasswordBox" Padding="5" Margin="5" >Password</TextBox>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
+            <Button x:Name="ConnectButton" Click="ConnectButton_OnClick" Margin="10">
+                <TextBlock Padding="10" Opacity="1">Connect</TextBlock>
+            </Button>
+            <Button x:Name="CancelButton" Click="CancelButton_OnClick" Margin="10">
+                <TextBlock Padding="10" Opacity="1">Cancel</TextBlock>
+            </Button>
+        </StackPanel>
+    </Grid>
+
+</Window>
