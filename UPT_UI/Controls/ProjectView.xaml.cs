@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +19,15 @@ namespace UPT_UI.Controls
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            MainWindow.ProjectWorker.OnProjectInitialisedDel += OnProjectInitialisedDel;
+            try
+            {
+                MainWindow.ProjectWorker.OnProjectInitialisedDel += OnProjectInitialisedDel;
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
         }
 
         private void OnProjectInitialisedDel(bool wassuccessful)
