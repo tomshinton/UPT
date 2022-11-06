@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:UPT_UI"
              xmlns:controls="clr-namespace:UPT_UI.Controls"
 
-             StartupUri="MainWindow.xaml"
+             StartupUri="Windows/MainWindow.xaml"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Application.Resources>
         
