@@ -1,0 +1,112 @@
+﻿<Window x:Class="UPT_UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UPT_UI" xmlns:controls="clr-namespace:UPT_UI.Controls"
+        mc:Ignorable="d"
+        Title="Unreal Project Tool" Height="720" Width="1280"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip" 
+        Background="#202027">
+
+    <Grid Background="#1A1A1A">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="AccountButton" Style="{x:Null}" Click="AccountButton_Click" Background="{x:Null}" BorderBrush="{x:Null}">
+            <Image x:Name="AccountCoverPhoto" Source="/BlankDriveIcon.png" ></Image>
+        </Button>
+        <DockPanel x:Name="Toolbar" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid Background="#202027" MouseMove="Toolbar_MouseMove">
+                <TextBlock x:Name="UnrealProjectToolTitle" 
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           FontSize="20"
+                           Padding="20, 0, 0, 0">
+                    UPT
+                </TextBlock>
+                <Grid x:Name="Toolbar_ButtonBox" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="10"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button 
+                        x:Name="MinimizeButton"
+                        Click="MinimizeButton_Click"
+                        Width="20"
+                        Height="20">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Minimize.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button 
+                        x:Name="ExitButton"
+                        Click="ExitButton_Click"
+                        Width="20"
+                        Height="20"
+                        Grid.Column="2" HorizontalAlignment="Left">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Exit.png"/>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </Grid>
+        </DockPanel>
+        <StackPanel x:Name="ActionBar" Orientation="Vertical" Background="#202027" Grid.Column="0" Grid.Row="1">
+            <Button x:Name="BindProjectButton" Height="30" Width="30" Margin="10" Click="BindProjectButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/BindProject.png"/>
+                </Button.Background>
+            </Button>
+            <Border BorderThickness="2" BorderBrush="#1A1A1A" Margin="2" CornerRadius="10" Background="#1A1A1A">
+                <StackPanel x:Name="DeployPanel">
+                    <Button x:Name="DeployButton" Height="30" Width="30" Margin="10" Click="DeployButton_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Deploy.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="SourceControlButton" Height="30" Width="30" Margin="10" Click="SourceControlButton_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Resources/SourceControlIcon.png"/>
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+            <TabControl x:Name="Workspace" IsEnabled="False">
+                <TabItem x:Name="OutputTab" Header="Output">
+                    <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF1A1A1A" ClipToBounds="True">
+                        <ScrollViewer x:Name="BuildOutlogLogScrollViewer" ScrollChanged="BuildOutlogLogScrollViewer_ScrollChanged">
+                            <TextBlock x:Name="BuildOutputLog" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBlock>
+                        </ScrollViewer>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Project" Background="{x:Null}">
+                    <StackPanel Background="#FF1A1A1A">
+                        <controls:ProjectView DockPanel.Dock="Top"></controls:ProjectView>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Modules" Background="{x:Null}">
+                    <DockPanel>
+                        <Button x:Name="NewModuleButton" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Top" Click="NewModuleButton_Click">
+                            <TextBlock Padding="20" Opacity="1">New Module</TextBlock>
+                        </Button>
+                        <ScrollViewer DockPanel.Dock ="Bottom" VerticalScrollBarVisibility="visible" VerticalAlignment="Stretch">
+                            <StackPanel x:Name="ModuleviewContainer">
+                            </StackPanel>
+                        </ScrollViewer>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>
