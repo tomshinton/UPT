@@ -108,7 +108,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Apis.Drive.v2" Version="1.57.0.2746" />
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.57.0.2746" />
     <PackageReference Include="Google.Apis.Oauth2.v2" Version="1.57.0.1869" />
     <PackageReference Include="Google.Apis.PeopleService.v1" Version="1.57.0.2707" />
