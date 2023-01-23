@@ -26,7 +26,6 @@ namespace UPT_UI.Controls
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                throw;
             }
         }
 
