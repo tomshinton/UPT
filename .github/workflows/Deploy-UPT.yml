@@ -18,9 +18,13 @@ jobs:
       - uses: actions/setup-dotnet@v1
         with: 
           dotnet-version: 3.1.x
+            
+      # Add  MsBuild to the PATH: https://github.com/microsoft/setup-msbuild
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v1.0.0
       
-      - run: dotnet restore ${{ env.PROJECT_PATH }}
+      - run: msbuild restore ${{ env.PROJECT_PATH }}
         
-      - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
+      - run: msbuild ${{ env.PROJECT_PATH }} -c Release --no-restore
         
-      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -p:PublishSingleFile=true --no-build
+      - run: msbuild publish ${{ env.PROJECT_PATH }} -c Release -p:PublishSingleFile=true --no-build
