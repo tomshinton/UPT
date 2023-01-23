@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
     
 env:
-  PROJECT_PATH: UnrealProjectTool/UPT_UI.csproj
+  PROJECT_PATH: UPT_UI/UPT_UI.csproj
   
 jobs:
   deploy:
