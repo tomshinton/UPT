@@ -29,8 +29,8 @@ jobs:
       App_Packages_Directory: AppPackages
       Solution_Path: UnrealProjectTool.sln
       Wpf_Project_Path: UnrealProjectTool\UPT_UI.csproj
-      Wap_Project_Directory: UnrealProjectTool.UPT_WAP
-      Wap_Project_Name: UnrealProjectTool.UPT_WAP.wapproj
+#      Wap_Project_Directory: UnrealProjectTool.UPT_WAP
+#      Wap_Project_Name: UnrealProjectTool.UPT_WAP.wapproj
       Actions_Allow_Unsecure_Commands: true # Allows AddPAth and SetEnv commands
 
     steps:
@@ -53,16 +53,16 @@ jobs:
       - name:  Restore the Wpf application to populate the obj folder
         run: msbuild $env:Solution_Path /t:Restore /p:Configuration=$env:Configuration /p:RuntimeIdentifier=$env:RuntimeIdentifier
         env:
-          Configuration: Debug
+          Configuration: Release
           RuntimeIdentifier: win-${{ matrix.targetplatform }}
     
       # Build the Windows Application Packaging project
       - name: Build the Windows Application Packaging Project (wapproj)
-        run: msbuild $env:Solution_Path /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:BuildMode /p:AppxBundle=$env:AppxBundle /p:PackageCertificateKeyFile=$env:SigningCertificate /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
+#        run: msbuild $env:Solution_Path /p:Platform=$env:TargetPlatform /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:BuildMode /p:AppxBundle=$env:AppxBundle /p:PackageCertificateKeyFile=$env:SigningCertificate /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
         env:
           AppxBundle: Never
           BuildMode: SideloadOnly
-          Configuration: Debug
+          Configuration: Release
           TargetPlatform: ${{ matrix.targetplatform }}
           
       # Upload the MSIX package: https://github.com/marketplace/actions/upload-artifact
