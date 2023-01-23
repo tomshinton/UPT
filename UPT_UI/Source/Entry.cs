@@ -5,15 +5,11 @@ namespace UPT_UI
     public class Entry
     {
         [STAThread]
-        public static void Main(string[] args) 
+        public static void Main()
         {
-            if (args != null && args.Length > 0) {
-                // ...
-            } else {
-                app.Run();
-            }                var app = new App();
-                app.InitializeComponent();
-
+            var application = new App();
+            application.InitializeComponent();
+            application.Run();
         }
     }
 }
