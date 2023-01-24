@@ -19,10 +19,6 @@ jobs:
 
   build:
 
-    strategy:
-      matrix:
-        targetplatform: [x64]
-
     runs-on: windows-latest
 
     env:
@@ -54,7 +50,7 @@ jobs:
         run: msbuild $env:Solution_Path /t:Restore /p:Configuration=$env:Configuration /p:RuntimeIdentifier=$env:RuntimeIdentifier
         env:
           Configuration: Release
-          RuntimeIdentifier: win-${{ matrix.targetplatform }}
+          RuntimeIdentifier: win-x64
     
       # Build the Windows Application Packaging project
       - name: Build the Windows Application Packaging Project (wapproj)
@@ -63,7 +59,7 @@ jobs:
           AppxBundle: Never
           BuildMode: SideloadOnly
           Configuration: Release
-          TargetPlatform: ${{ matrix.targetplatform }}
+          TargetPlatform: win-x64
           
       # Upload the MSIX package: https://github.com/marketplace/actions/upload-artifact
       - name: Upload build artifacts
