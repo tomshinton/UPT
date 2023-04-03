@@ -62,9 +62,19 @@ namespace UPT_UI.Controls
                 }
                 else
                 {
-                    MainWindow.ReportProgress("[Copyright Check - FAIL] " + File);
-                    InvalidFiles.Add(File, IncorrectFirstLine);
-                    InvalidFileNames.Add(File);
+                    FileInfo AsFileInfo = new FileInfo(File);
+                    if (AsFileInfo.IsReadOnly)
+                    {
+                        MainWindow.ReportProgress("[Copyright Check- FAIL READONLY] " + File);
+                        MainWindow.ReportProgress("Connect to source control or make file readonly on disk");
+                        continue;
+                    }
+                    else
+                    {
+                        MainWindow.ReportProgress("[Copyright Check - FAIL] " + File);
+                        InvalidFiles.Add(File, IncorrectFirstLine);
+                        InvalidFileNames.Add(File);
+                    }
                 }
                 
                 FileNum++;

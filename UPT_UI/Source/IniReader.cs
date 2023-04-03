@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using UPT_UI;
 
 public class IniReader
 {
@@ -31,7 +33,14 @@ public class IniReader
 
             if (SplitLine.Length == 2)
             {
-                Pairs.Add(SplitLine[0], SplitLine[1]);
+                try
+                {
+                    Pairs.Add(SplitLine[0], SplitLine[1]);
+                }
+                catch (Exception e)
+                {
+                    MainWindow.ReportProgress(e.Message);
+                }
             }
         }
     }
