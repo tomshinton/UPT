@@ -92,19 +92,24 @@ namespace UPT_UI
                     
                     EngineDirectory = InEngineDirectory;
 
+                    MainWindow.ReportProgress("[INIT 1/5] Generating Project Proxy Object");
                     GenerateProjectProxyObject();
 
                     DefaultGameConfigReader = new IniReader(CacheDefaultGamePath());
 
+                    MainWindow.ReportProgress("[INIT 2/5] Caching Source Paths");
                     CacheSourcePath();
+
+                    MainWindow.ReportProgress("[INIT 3/5] Caching Primary Gameplay build.cs file");
                     CachePrimaryGameplayBuildFile();
 
+                    MainWindow.ReportProgress("[INIT 4/5] Caching Build Directories");
                     CacheBuildDirectories();
 
+                    MainWindow.ReportProgress("[INIT 5/5] Caching support build targets");
                     CacheTargets();
 
                     Properties.Settings.Default.LastEngineDir = InEngineDirectory;
-                    
                     Properties.Settings.Default.Save();
                     
                     OnProjectInitialisedDel(true);

@@ -5,10 +5,13 @@
     <SccProvider />
     <SccAuxPath />
     <SccLocalPath />
+    <AssemblyName>UPT</AssemblyName>
+    <RootNamespace>UPT</RootNamespace>
+    <ApplicationIcon>UPT_Icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <PublishReadyToRun>true</PublishReadyToRun>
     <PublishSingleFile>true</PublishSingleFile>
@@ -16,6 +19,14 @@
     <UseWPF>true</UseWPF>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <StartupObject>UPT_UI.Entry</StartupObject>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
