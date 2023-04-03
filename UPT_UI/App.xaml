@@ -61,7 +61,7 @@
             <Setter Property="Opacity" Value="0.5"></Setter>
             <Setter Property="FontFamily" Value="pack://application:,,,/Resources/Fonts/Roboto/#Roboto"></Setter>
         </Style>
-
+        
         <!-- Tabs and Tab Controls -->
         <Style TargetType="TabItem">
             <Setter Property="Template">
@@ -100,6 +100,14 @@
             <Setter Property="BorderThickness" Value="2"></Setter>
         </Style>
 
+        <!-- Password Boxes -->
+        <Style TargetType="PasswordBox">
+            <Setter Property="Background" Value="#202027"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Opacity" Value="0.5"></Setter>
+            <Setter Property="BorderThickness" Value="2"></Setter>
+        </Style>
+        
         <!-- Combo Item boxes-->
         <Style TargetType="ComboBoxItem">
             <Setter Property="Background" Value="#202027"/>
@@ -124,9 +132,8 @@
             </Setter>
         </Style>
         
-        <!-- ComboBox style -->
+        <!--#region ComboBoxstyle-->
         <SolidColorBrush x:Key="ComboBox.Static.Background" Color="#202027"/>
-        
         <SolidColorBrush x:Key="ComboBox.Static.Border" Color="Transparent"/>
         <SolidColorBrush x:Key="ComboBox.Static.Glyph" Color="#FF606060"/>
         <SolidColorBrush x:Key="ComboBox.Static.Editable.Background" Color="#FFFFFFFF"/>
@@ -301,5 +308,8 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
+        <!--#endregion-->
+        
+        
     </Application.Resources>
 </Application>

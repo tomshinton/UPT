@@ -21,10 +21,20 @@
             <TextBlock FontSize="15" Padding="10, 5, 0, 5" Background="#202027">Connect to Perforce</TextBlock>
         </DockPanel>
         <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Width="500">
-            <TextBox x:Name="ServerURLBox" Padding="5" Margin="5" >ServerURL</TextBox>
-            <TextBox x:Name="UserNameBox" Padding="5" Margin="5" >Username</TextBox>
-            <TextBox x:Name="WorkspaceNameBox" Padding="5" Margin="5" >Workspace</TextBox>
-            <TextBox x:Name="PasswordBox" Padding="5" Margin="5" >Password</TextBox>
+            <Grid>
+                <TextBox x:Name="ServerURLBox" LostFocus="ServerURLBox_OnLostFocus" Padding="5" Margin="5" ></TextBox>
+                <TextBox x:Name="ServerURLBoxWatermark" GotFocus="ServerURLBoxWatermark_OnGotFocus" Padding="5" Margin="5">ServerURL</TextBox>
+            </Grid>
+            <Grid>
+               <TextBox x:Name="UserNameBox" LostFocus="UserNameBox_OnLostFocus" Padding="5" Margin="5"></TextBox>
+                <TextBox x:Name="UserNameBoxWatermark" GotFocus="UserNameBoxWatermark_OnGotFocus" Padding="5" Margin="5" >User</TextBox>
+            </Grid>
+            
+            <Grid>
+                <TextBox x:Name="WorkspaceNameBox" LostFocus="WorkspaceNameBox_OnLostFocus" Padding="5" Margin="5"></TextBox>
+                <TextBox x:Name="WorkspaceNameBoxWatermark" GotFocus="WorkspaceNameBoxWatermark_OnGotFocus" Padding="5" Margin="5" >Workspace</TextBox>
+            </Grid>
+            <PasswordBox x:Name="PasswordBox" Padding="5" Margin="5" FontFamily="Times New Roman"></PasswordBox>
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="2">
             <Button x:Name="ConnectButton" Click="ConnectButton_OnClick" Margin="10">
