@@ -93,13 +93,17 @@ namespace UPT_UI.Source.SourceControl
                 string CLDesc = InCLName == "" ? "UPT Generated CL" : InCLName;
 
                 Changelist CLToUse = null;
-                foreach (Changelist CL in CLs)
+
+                if (CLs != null)
                 {
-                    IList<FileMetaData> CLFiles = CL.Files;
-                    if (CL.Description == CLDesc)
+                    foreach (Changelist CL in CLs)
                     {
-                        CLToUse = CL;
-                        break;
+                        IList<FileMetaData> CLFiles = CL.Files;
+                        if (CL.Description == CLDesc)
+                        {
+                            CLToUse = CL;
+                            break;
+                        }
                     }
                 }
 
