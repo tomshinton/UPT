@@ -7,12 +7,20 @@
     <authors>Tom Shinton</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <!-- <icon>icon.png</icon> -->
-    <projectUrl>http://project_url_here_or_delete_this_line/</projectUrl>
-    <description>Description</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <projectUrl>http://www.tomshinton.com/</projectUrl>
+    <description>Unreal Project Tool - Multipurpose tool for working with Unreal Projects </description>
+    <releaseNotes>
+      v0.0.1-alpha - Initial Alpha Release
+      - Copyright fixup for all source files - String pulled from cached Config file.  All files that're patched are collated in single P4 cl, if enabled.
+      - Delete Empty Repositories - Automatically scrub source directories for empty files - useful for cleaning up after nontrivial dll/module refactors
+      - New Module tool - automatically add a new module to a bound project, supporting all LoadPhase and ModuleTypes.  New files/edits to existing files are collated in single CL ready for submission in P4, if enabled
+      - One-Click build generation.  Tool automatically detects supported build targets, and can kick off a build of each type with a single click, all of which are staged within project directory.  If Cloud storage is enabled, these builds can be automatically pushed after generation.
+      
+      - P4 Integration - If local environment is using Source Control, tool can sign into P4 on users behalf and run commands such as new CL, edit, add file, etc etc
+      - GDrive Integration for automatic build pushing
+    </releaseNotes>
     <copyright>Tom Shinton 2023</copyright>
-    <tags>Tag1 Tag2</tags>
+    <tags>v0.0.1-alpha</tags>
   </metadata>
 
   <files>
