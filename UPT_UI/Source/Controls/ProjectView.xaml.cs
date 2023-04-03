@@ -63,7 +63,7 @@ namespace UPT_UI.Controls
                 else
                 {
                     FileInfo AsFileInfo = new FileInfo(File);
-                    if (AsFileInfo.IsReadOnly)
+                    if (AsFileInfo.IsReadOnly && !MainWindow.SourceControlHandler.IsInitialised())
                     {
                         MainWindow.ReportProgress("[Copyright Check- FAIL READONLY] " + File);
                         MainWindow.ReportProgress("Connect to source control or make file readonly on disk");
