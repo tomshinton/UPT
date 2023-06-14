@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup Label="Globals">
     <SccProjectName />
@@ -126,7 +126,7 @@
     <PackageReference Include="Google.Apis.Oauth2.v2" Version="1.57.0.1869" />
     <PackageReference Include="Google.Apis.PeopleService.v1" Version="1.57.0.2707" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="NuGet.CommandLine" Version="6.4.0">
+    <PackageReference Include="NuGet.CommandLine" Version="6.4.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
